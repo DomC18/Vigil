@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vigil Config</title>
+        <link rel="stylesheet" href="{% static 'styles/general.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/navbar.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <script defer src="{% static 'js/home.js' %}"></script>
+    </head>
+    <body>
+        <main>
+            <nav class="navbar" id="home">
+                <div class="name-container">
+                    <a class="name kanit" href="{% url 'home' %}">
+                        VIGIL
+                    </a>
+                </div>
+                <div class="links-container">
+                    {% if user.is_authenticated %}
+                        <div class="link-container">
+                            <a class="link" href="{% url 'pastmatches' %}">
+                                Past Matches
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="link-container">
+                        <a class="link" href="{% url 'config' %}">
+                            Config
+                        </a>
+                    </div>
+                    <div class="link-container">
+                        <a class="link" href="{% url 'analyze' %}">
+                            Analyze
+                        </a>
+                    </div>
+                    {% if not user.is_authenticated %}
+                        <div class="link-container">
+                            <a class="signin kanit" href="{% url 'login' %}">
+                                SIGN IN
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="link-container">
+                            <a class="link" href="{% url 'logout' %}">
+                                Logout
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </nav>
+            <header class="intro-container">
+                
+            </header>
+        </main>
+    </body>
+</html>
