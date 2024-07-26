@@ -57,9 +57,23 @@
                     {% endif %}
                 </div>
             </nav>
-            <header class="intro-container">
-                
-            </header>
+            <section class="intro-container" style="margin-top: 50px;">
+                {% if user.is_authenticated %}
+                    <p class="">
+                        Load Configs Here
+                    </p>
+                    <button>
+                        <a href="">
+                            
+                        </a>
+                    </button>
+                {% endif %}
+                <button>
+                    <a href="{% url 'newconfig' %}">
+                        Start a new config
+                    </a>
+                </button>
+            </section>
         </main>
     </body>
 </html>
