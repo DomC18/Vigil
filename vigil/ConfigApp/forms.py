@@ -1,21 +1,21 @@
 from django import forms
 from .models import CurrentConfiguration, RobotConfiguration, SubsystemConfiguration, Subsystem
 
-# class CurrentConfigForm(forms.ModelForm):
-#     class Meta:
-#         model = CurrentConfiguration
-#         fields = [
-#             "Subsystem Config",
-#             "Robot Config"
-#         ]
-#         widgets = {
-#             "Subsystem Config": forms.CheckboxSelectMultiple(attrs={"class": "form-input"}, choices=[(s.id) for s in SubsystemConfiguration.objects.all()]),
-#             "Robot Config": forms.CheckboxSelectMultiple(attrs={"class": "form-input"}, choices=[(s.id) for s in RobotConfiguration.objects.all()])
-#         }
-#         labels = {
-#             "Subsystem Config": "Select Subsystem Configurations",
-#             "Robot Config": "Select Robot Configurations"
-#         }
+class CurrentConfigForm(forms.ModelForm):
+    class Meta:
+        model = CurrentConfiguration
+        fields = [
+            "SubsystemConfig",
+            "RobotConfig"
+        ]
+        widgets = {
+            "SubsystemConfig": forms.RadioSelect(attrs={"class": "form-radio"}, choices=[(s.id) for s in SubsystemConfiguration.objects.all()]),
+            "RobotConfig": forms.RadioSelect(attrs={"class": "form-radio"}, choices=[(s.id) for s in RobotConfiguration.objects.all()])
+        }
+        labels = {
+            "SubsystemConfig": "Select Subsystem Config",
+            "RobotConfig": "Select Robot Config"
+        }
 
 class RobotConfigForm(forms.ModelForm):
     class Meta:

@@ -1,14 +1,22 @@
 from django.shortcuts import render, redirect
-from .forms import RobotConfigForm, SubsystemConfigForm, SubsystemForm
+from django.core.handlers.wsgi import WSGIRequest
+from .forms import RobotConfigForm, SubsystemConfigForm, SubsystemForm, CurrentConfigForm
 
 # Create your views here.
-def config(request):
+def config(request:WSGIRequest):
     return render(request, 'config.html')
 
-# def selectcurrentconfig(request):
-#     return render(request, 'selectcurrentconfig.html')
+def newcurrentconfig(request:WSGIRequest):
+    if request.method == "POST":
+        form = CurrentConfigForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('config')
+    else:
+        form = CurrentConfigForm
+        return render(request, 'newcurrentconfig.html', {'form': form})
 
-def newrobotconfig(request):
+def newrobotconfig(request:WSGIRequest):
     if request.method == "POST":
         form = RobotConfigForm(request.POST)
         if form.is_valid():
@@ -18,7 +26,7 @@ def newrobotconfig(request):
         form = RobotConfigForm
         return render(request, 'newrobotconfig.html')
 
-def newsubsystemconfig(request):
+def newsubsystemconfig(request:WSGIRequest):
     if request.method == "POST":
         form = SubsystemConfigForm(request.POST)
         if form.is_valid():
@@ -28,7 +36,7 @@ def newsubsystemconfig(request):
         form = SubsystemConfigForm
         return render(request, 'newsubsystemconfig.html', {"form": form})
 
-def newsubsystem(request):
+def newsubsystem(request:WSGIRequest):
     if request.method == "POST":
         form = SubsystemForm(request.POST)
         if form.is_valid():

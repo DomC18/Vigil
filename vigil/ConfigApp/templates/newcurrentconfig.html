@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vigil Current Config</title>
+        <title>Vigil Config</title>
         <link rel="stylesheet" href="{% static 'newconfig/styles/general.css' %}">
         <link rel="stylesheet" href="{% static 'newconfig/styles/navbar.css' %}">
         <link rel="stylesheet" href="{% static 'newconfig/styles/form.css' %}">
@@ -62,15 +62,25 @@
                     <div class="gridder">
                         <div class="title-container">
                             <p class="title">
-                                Add a New Subsystem Configuration
+                                Add a New Configuration
                             </p>
                             <p class="description">
-                                Please fill out the form below to add a new subsystem configuration.
+                                Please fill out the form below to add a new configuration.
                             </p>
                         </div>
                         <form class="form-container" action="" method="post">
                             {% csrf_token %}
-                            
+                            <div class="element-container">
+                                <label for="{{ form.SubsystemConfig.id }}" class="form-label">Select Subsystem Config:</label>
+                                {{ form.SubsystemConfig }}
+                            </div>
+                            <div class="element-container">
+                                <label for="{{ form.RobotConfig.id }}" class="form-label">Select Robot Config:</label>
+                                {{ form.RobotConfig }}
+                            </div>
+                            <button class="submit-btn">
+                                Submit
+                            </button>
                         </form>
                     </div>
                 </div>

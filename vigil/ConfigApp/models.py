@@ -31,8 +31,8 @@ class RobotConfiguration(models.Model):
 
 
 class CurrentConfiguration(models.Model):
-    subsystem_config = models.ForeignKey(name="Subsystem Config", to=SubsystemConfiguration, blank=True, null=True, on_delete=models.CASCADE)
-    robot_config = models.ForeignKey(name="Robot Config", to=RobotConfiguration, blank=True, null=True, on_delete=models.CASCADE)
+    subsystem_configuration = models.ForeignKey(name="SubsystemConfig", to=SubsystemConfiguration, blank=True, null=True, on_delete=models.CASCADE)
+    robot_configuration = models.ForeignKey(name="RobotConfig", to=RobotConfiguration, blank=True, null=True, on_delete=models.CASCADE)
 
 
 
