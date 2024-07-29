@@ -5,8 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vigil Config</title>
+        <link rel="stylesheet" href="{% static 'config/styles/config.css' %}">
         <link rel="stylesheet" href="{% static 'config/styles/general.css' %}">
-        <link rel="stylesheet" href="{% static 'config/styles/header.css' %}">
         <link rel="stylesheet" href="{% static 'config/styles/navbar.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,29 +57,33 @@
                     {% endif %}
                 </div>
             </nav>
-            <section class="intro-container" style="margin-top: 50px;">
-                {% if user.is_authenticated %}
-                    <p class="">
-                        Load Configs Here
-                    </p>
-                    <div>
-                        <a href="">
-                            hello
-                        </a>
-                    </div>
-                {% endif %}
-                <a href="{% url 'newcurrentconfig' %}">
-                    New Config
-                </a>
-                <a href="{% url 'newrobotconfig' %}">
-                    New Robot Config
-                </a>
-                <a href="{% url 'newsubsystemconfig' %}">
-                    New Subsystem Config
-                </a>
-                <a href="{% url 'newsubsystem' %}">
-                    New Subsystem
-                </a>
+            <section class="configs-container" style="margin-top: 50px;">
+                <div class="old-configs-container">
+                    {% if user.is_authenticated %}
+                        <p class="">
+                            Load Configs Here
+                        </p>
+                        <div>
+                            <a href="">
+                                hello
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="new-configs-container">
+                    <a href="{% url 'newcurrentconfig' %}">
+                        New Config
+                    </a>
+                    <a href="{% url 'newrobotconfig' %}">
+                        New Robot Config
+                    </a>
+                    <a href="{% url 'newsubsystemconfig' %}">
+                        New Subsystem Config
+                    </a>
+                    <a href="{% url 'newsubsystem' %}">
+                        New Subsystem
+                    </a>
+                </div>
             </section>
         </main>
     </body>

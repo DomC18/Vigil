@@ -42,4 +42,4 @@ class CurrentConfiguration(models.Model):
 #     subsystems = models.ManyToManyField()
 #     subsystem_configs = models.ManyToManyField()
 #     robot_configs = models.ManyToManyField()
-#     current_config = models.ForeignKey(CurrentConfiguration, blank=True, on_delete=models.CASCADE)
+#     current_config = models.ForeignKey(name="CurrentConfig", to=CurrentConfiguration, blank=True, null=True on_delete=models.CASCADE)

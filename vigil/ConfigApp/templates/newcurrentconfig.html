@@ -70,13 +70,13 @@
                         </div>
                         <form class="form-container" action="" method="post">
                             {% csrf_token %}
-                            <div class="element-container-long">
+                            <div class="element-container">
                                 <label for="{{ form.SubsystemConfig.id }}" class="form-label">Select Subsystem Config:</label>
                             </div>
                             <div class="element-container-radio">
                                 {{ form.SubsystemConfig }}
                             </div>
-                            <div class="element-container-long">
+                            <div class="element-container">
                                 <label for="{{ form.RobotConfig.id }}" class="form-label">Select Robot Config:</label>
                             </div>
                             <div class="element-container-radio">
