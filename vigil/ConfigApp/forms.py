@@ -12,10 +12,6 @@ class CurrentConfigForm(forms.ModelForm):
             "SubsystemConfig": forms.RadioSelect(attrs={"class": "form-radio"}, choices=[(s.id) for s in SubsystemConfiguration.objects.all()]),
             "RobotConfig": forms.RadioSelect(attrs={"class": "form-radio"}, choices=[(s.id) for s in RobotConfiguration.objects.all()])
         }
-        labels = {
-            "SubsystemConfig": "Select Subsystem Config",
-            "RobotConfig": "Select Robot Config"
-        }
 
 class RobotConfigForm(forms.ModelForm):
     class Meta:
@@ -34,13 +30,6 @@ class RobotConfigForm(forms.ModelForm):
             "Team Number": forms.NumberInput(attrs={"class": "form-input"}),
             "DriveTrain Type": forms.TextInput(attrs={"class": "form-input"}),
         }
-        labels = {
-            "Robot Name": "Robot Name",
-            "Robot Image": "Upload Robot Image",
-            "FRC Year": "FRC Year",
-            "Team Number": "Team Number",
-            "DriveTrain Type": "Drivetrain Type"
-        }
 
 class SubsystemConfigForm(forms.ModelForm):
     class Meta:
@@ -53,10 +42,6 @@ class SubsystemConfigForm(forms.ModelForm):
             "SubConfigName": forms.TextInput(attrs={"class": "form-input"}),
             "Subsystems": forms.CheckboxSelectMultiple(attrs={"class": "form-checkbox"}, choices=[(s.id) for s in Subsystem.objects.all()])
         }
-        labels = {
-            "SubConfigName": "Subsystem Config Name",
-            "Subsystems": "Select Subsystems"
-        }
 
 class SubsystemForm(forms.ModelForm):
     class Meta:
@@ -68,8 +53,4 @@ class SubsystemForm(forms.ModelForm):
         widgets = {
             "Subsystem Name": forms.TextInput(attrs={"class": "form-input"}),
             "Subsystem Image": forms.FileInput(attrs={"class": "form-input"})
-        }
-        labels = {
-            "Subsystem Name": "Subsystem Name",
-            "Subsystem Image": "Upload Subsystem Image"
         }

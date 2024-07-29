@@ -70,12 +70,14 @@
                         </div>
                         <form class="form-container" action="" method="post">
                             {% csrf_token %}
-                            <div class="element-container">
-                                <label for="{{ form.SubConfigName.id }}" class="form-label">Subsystem Config Name</label>
+                            <div class="element-container-long">
+                                <label for="{{ form.SubConfigName.id }}" class="form-label" style="text-align: center;">Subsystem Config Name</label>
                                 {{ form.SubConfigName }}
                             </div>
-                            <div class="element-container">
+                            <div class="element-container-long">
                                 <label for="{{ form.Subsystems.id }}" class="form-label">Select Subsystems</label>
+                            </div>
+                            <div class="element-container-radio">
                                 {{ form.Subsystems }}
                             </div>
                             <button class="submit-btn">

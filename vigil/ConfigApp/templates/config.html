@@ -62,26 +62,24 @@
                     <p class="">
                         Load Configs Here
                     </p>
-                    <button>
+                    <div>
                         <a href="">
-                            
+                            hello
                         </a>
-                    </button>
+                    </div>
                 {% endif %}
-                <button>
-                    <a href="{% url 'newcurrentconfig' %}">
-                        New Config
-                    </a>
-                    <a href="{% url 'newrobotconfig' %}">
-                        New Robot Config
-                    </a>
-                    <a href="{% url 'newsubsystemconfig' %}">
-                        New Subsystem Config
-                    </a>
-                    <a href="{% url 'newsubsystem' %}">
-                        New Subsystem
-                    </a>
-                </button>
+                <a href="{% url 'newcurrentconfig' %}">
+                    New Config
+                </a>
+                <a href="{% url 'newrobotconfig' %}">
+                    New Robot Config
+                </a>
+                <a href="{% url 'newsubsystemconfig' %}">
+                    New Subsystem Config
+                </a>
+                <a href="{% url 'newsubsystem' %}">
+                    New Subsystem
+                </a>
             </section>
         </main>
     </body>
