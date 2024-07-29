@@ -10,7 +10,7 @@ class Subsystem(models.Model):
         return super().__str__()
 
 class SubsystemConfiguration(models.Model):
-    name = models.CharField(name="Subsystem Configuration Name", max_length=50)
+    name = models.CharField(name="SubConfigName", max_length=50)
     subsystems = models.ManyToManyField(name="Subsystems", to=Subsystem, blank=True)
 
     def __str__(self):

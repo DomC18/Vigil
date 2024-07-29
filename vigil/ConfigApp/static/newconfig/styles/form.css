@@ -57,6 +57,9 @@
     border-radius: 5px;
     border: none;
 }
+.form-checkbox{
+    font-size: 30px;
+}
 .submit-btn {
     background-color: rgb(255, 209, 130);
     color: black;

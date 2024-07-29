@@ -9,8 +9,8 @@ from .models import CurrentConfiguration, RobotConfiguration, SubsystemConfigura
 #             "Robot Config"
 #         ]
 #         widgets = {
-#             "Subsystem Config": forms.CheckboxSelectMultiple(choices=[(s.id) for s in SubsystemConfiguration.objects.all()]),
-#             "Robot Config": forms.CheckboxSelectMultiple(choices=[(s.id) for s in RobotConfiguration.objects.all()])
+#             "Subsystem Config": forms.CheckboxSelectMultiple(attrs={"class": "form-input"}, choices=[(s.id) for s in SubsystemConfiguration.objects.all()]),
+#             "Robot Config": forms.CheckboxSelectMultiple(attrs={"class": "form-input"}, choices=[(s.id) for s in RobotConfiguration.objects.all()])
 #         }
 #         labels = {
 #             "Subsystem Config": "Select Subsystem Configurations",
@@ -42,21 +42,21 @@ class RobotConfigForm(forms.ModelForm):
             "DriveTrain Type": "Drivetrain Type"
         }
 
-# class SubsystemConfigForm(forms.ModelForm):
-#     class Meta:
-#         model = SubsystemConfiguration
-#         fields = [
-#             "Subsystem Configuration Name"
-#             "Subsystems"
-#         ]
-#         widgets = {
-#             "Subsystem Configuration Name": forms.TextInput(attrs={"class": "form-input"}),
-#             "Subsystems": forms.CheckboxSelectMultiple(choices=[(s.id) for s in Subsystem.objects.all()])
-#         }
-#         labels = {
-#             "Subsystem Configuration Name": "Subsystem Config Name",
-#             "Subsystems": "Select Subsystems"
-#         }
+class SubsystemConfigForm(forms.ModelForm):
+    class Meta:
+        model = SubsystemConfiguration
+        fields = [
+            "SubConfigName",
+            "Subsystems"
+        ]
+        widgets = {
+            "SubConfigName": forms.TextInput(attrs={"class": "form-input"}),
+            "Subsystems": forms.CheckboxSelectMultiple(attrs={"class": "form-checkbox"}, choices=[(s.id) for s in Subsystem.objects.all()])
+        }
+        labels = {
+            "SubConfigName": "Subsystem Config Name",
+            "Subsystems": "Select Subsystems"
+        }
 
 class SubsystemForm(forms.ModelForm):
     class Meta:

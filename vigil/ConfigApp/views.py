@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RobotConfigForm, SubsystemForm
+from .forms import RobotConfigForm, SubsystemConfigForm, SubsystemForm
 
 # Create your views here.
 def config(request):
@@ -18,15 +18,15 @@ def newrobotconfig(request):
         form = RobotConfigForm
         return render(request, 'newrobotconfig.html')
 
-# def newsubsystemconfig(request):
-#     if request.method == "POST":
-#         form = SubsystemConfigForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('config')
-#     else:
-#         form = SubsystemConfigForm
-#         return render(request, 'newsubsystemconfig.html', {"form": form})
+def newsubsystemconfig(request):
+    if request.method == "POST":
+        form = SubsystemConfigForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('config')
+    else:
+        form = SubsystemConfigForm
+        return render(request, 'newsubsystemconfig.html', {"form": form})
 
 def newsubsystem(request):
     if request.method == "POST":
