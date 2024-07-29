@@ -39,7 +39,7 @@
     place-items: center;
     margin-bottom: 50px;
 }
-.element-containerm, .element-container-long, .element-container-radio {
+.element-container, .element-container-long, .element-container-radio {
     align-content: center;
 }
 .element-container {
@@ -52,6 +52,9 @@
     margin-top: 6%;
     margin-bottom: 100px;
 }
+.element-container-none {
+    height: 0;
+}
 .image-container {
     width: 65.5%;
 }
@@ -59,6 +62,9 @@
     color: rgb(250,193,93);
     display: block;
     font-size: 56px;
+}
+.input-none {
+    opacity: 0;
 }
 .form-input {
     font-size: 54px;

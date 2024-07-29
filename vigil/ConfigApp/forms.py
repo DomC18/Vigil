@@ -5,6 +5,7 @@ class CurrentConfigForm(forms.ModelForm):
     class Meta:
         model = CurrentConfiguration
         fields = [
+            "CreatedBy",
             "SubsystemConfig",
             "RobotConfig"
         ]
@@ -17,6 +18,7 @@ class RobotConfigForm(forms.ModelForm):
     class Meta:
         model = RobotConfiguration
         fields = [
+            "CreatedBy",
             "Robot Name",
             "Robot Image",
             "FRC Year", 
@@ -35,6 +37,7 @@ class SubsystemConfigForm(forms.ModelForm):
     class Meta:
         model = SubsystemConfiguration
         fields = [
+            "CreatedBy",
             "SubConfigName",
             "Subsystems"
         ]
@@ -47,6 +50,7 @@ class SubsystemForm(forms.ModelForm):
     class Meta:
         model = Subsystem
         fields = [
+            "CreatedBy",
             "Subsystem Name",
             "Subsystem Image"
         ]

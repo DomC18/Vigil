@@ -70,6 +70,9 @@
                         </div>
                         <form class="form-container" action="" method="post">
                             {% csrf_token %}
+                            <div class="element-container-none">
+                                <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
+                            </div>
                             <div class="element-container">
                                 <label class="form-label" for="Robot Name">Robot Name</label>
                                 <input class="form-input" type="text" required value="Name" name="Robot Name">

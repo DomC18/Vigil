@@ -70,6 +70,9 @@
                         </div>
                         <form class="form-container" action="" method="post">
                             {% csrf_token %}
+                            <div class="element-container-none">
+                                <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
+                            </div>
                             <div class="element-container">
                                 <label for="{{ form.SubsystemConfig.id }}" class="form-label">Select Subsystem Config:</label>
                             </div>

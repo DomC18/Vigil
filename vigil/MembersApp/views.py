@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-
 from .forms import UserInfoForm
+import globalvariables as gv
 
 def user_login(request):
     if request.method == 'POST':
@@ -13,6 +13,10 @@ def user_login(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Logged in successfully!')
+            gv.current_user = username
+            print()
+            print(f"Active User(name): {gv.current_user}")
+            print()
             return redirect('home')
         else:
             messages.error(request, 'Invalid credentials!')
@@ -35,6 +39,10 @@ def user_register(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, f'Account created for {username}!')
+            gv.current_user = username
+            print()
+            print(f"Active User(name): {gv.current_user}")
+            print()
             return redirect('home')
         else:
             messages.error(request, 'Registration failed!')
