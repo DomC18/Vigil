@@ -3,7 +3,15 @@
     align-content: center;
     justify-content: center;
     text-align: center;
+    margin-top: 50px;
 }
+.config-title-container {
+
+}
+.config-title {
+    
+}
+
 .old-configs-container {
     flex: 1;
 }

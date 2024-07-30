@@ -57,39 +57,54 @@
                     {% endif %}
                 </div>
             </nav>
-            <section>
-                <div class="flexer">
-                    <div class="gridder">
-                        <div class="title-container">
-                            <p class="title">
-                                Add a New Subsystem Configuration
-                            </p>
-                            <p class="description">
-                                Please fill out the form below to add a new subsystem configuration.
-                            </p>
+            {% if user.is_authenticated %}
+                <section>
+                    <div class="flexer">
+                        <div class="gridder">
+                            <div class="title-container">
+                                <p class="title">
+                                    Add a New Subsystem Configuration
+                                </p>
+                                <p class="description">
+                                    Please fill out the form below to add a new subsystem configuration.
+                                </p>
+                            </div>
+                            <form class="form-container" action="" method="post">
+                                {% csrf_token %}
+                                <div class="element-container-none">
+                                    <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
+                                </div>
+                                <div class="element-container-long">
+                                    <label for="{{ form.SubConfigName.id }}" class="form-label" style="text-align: center;">Subsystem Config Name</label>
+                                    {{ form.SubConfigName }}
+                                </div>
+                                <div class="element-container">
+                                    <label for="{{ form.Subsystems.id }}" class="form-label">Select Subsystems</label>
+                                </div>
+                                <div class="element-container-radio">
+                                    {% for subsystem in subsystems %}
+                                        <div class="radio-container">
+                                            <label class="form-radio" for="id_Subsystems_{{subsystem.id}}">
+                                                <input type="checkbox" name="Subsystems" value="{{ subsystem.id }}" class="form-radio-button" id="id_Subsystems_{{subsystem.id}}">
+                                                {{ subsystem }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="submit-btn">
+                                    Submit
+                                </button>
+                            </form>
                         </div>
-                        <form class="form-container" action="" method="post">
-                            {% csrf_token %}
-                            <div class="element-container-none">
-                                <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
-                            </div>
-                            <div class="element-container-long">
-                                <label for="{{ form.SubConfigName.id }}" class="form-label" style="text-align: center;">Subsystem Config Name</label>
-                                {{ form.SubConfigName }}
-                            </div>
-                            <div class="element-container">
-                                <label for="{{ form.Subsystems.id }}" class="form-label">Select Subsystems</label>
-                            </div>
-                            <div class="element-container-radio">
-                                {{ form.Subsystems }}
-                            </div>
-                            <button class="submit-btn">
-                                Submit
-                            </button>
-                        </form>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
+                    </a>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>

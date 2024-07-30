@@ -57,34 +57,78 @@
                     {% endif %}
                 </div>
             </nav>
-            <section class="configs-container" style="margin-top: 50px;">
-                <div class="old-configs-container">
-                    {% if user.is_authenticated %}
-                        <p class="">
-                            Load Configs Here
-                        </p>
-                        <div>
-                            <a href="">
-                                hello
+            {% if user.is_authenticated %}
+                <section class="configs-container" style="margin-top: 50px;">
+                    <div class="old-configs-container">
+                        <div class="config-title-container">
+                            <p class="config-title">
+                                Load Configs Here
+                            </p>
+                        </div>
+                        <div class="pages-container">
+                            <a class="page-link" href="{% url 'robotconfigs' %}">
+                                Robot Configs
+                            </a>
+                            <a class="page-link" href="{% url 'subsystemconfigs' %}">
+                                Subsystem Configs
+                            </a>
+                            <a class="page-link" href="{% url 'subsystems' %}">
+                                Subsystems
                             </a>
                         </div>
-                    {% endif %}
-                </div>
-                <div class="new-configs-container">
-                    <a href="{% url 'newcurrentconfig' %}">
-                        New Config
+                        {% for config in content %}
+                            <div class="curr-config-container">
+                                <p class="curr-config-title">
+                                    Current Configuration:  
+                                </p>
+                                <p class="curr-config-info">
+                                    {{ config.SubsystemConfig }} - {{ config.RobotConfig }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                        <div class="many-configs-container">
+                            {% for config in configcontent %}
+                                <div class="config-container">
+                                    <p class="config-name">
+                                        {{ config.RobotName }}
+                                        {{ config.SubConfigName }}
+                                        {{ config.SubsystemName }}
+                                    </p>
+                                </div>  
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="new-configs-container">
+                        <div class="config-title-container">
+                            <p class="config-title">
+                                New Configs Here
+                            </p>
+                        </div>
+                        {% if display_curr_config %}
+                            <a href="{% url 'newcurrentconfig' %}">
+                                New Config
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'newrobotconfig' %}">
+                            New Robot Config
+                        </a>
+                        {% if display_sub_config %}
+                            <a href="{% url 'newsubsystemconfig' %}">
+                                New Subsystem Config
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'newsubsystem' %}">
+                            New Subsystem
+                        </a>
+                    </div>
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
                     </a>
-                    <a href="{% url 'newrobotconfig' %}">
-                        New Robot Config
-                    </a>
-                    <a href="{% url 'newsubsystemconfig' %}">
-                        New Subsystem Config
-                    </a>
-                    <a href="{% url 'newsubsystem' %}">
-                        New Subsystem
-                    </a>
-                </div>
-            </section>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>

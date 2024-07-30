@@ -57,41 +57,75 @@
                     {% endif %}
                 </div>
             </nav>
-            <section>
-                <div class="flexer">
-                    <div class="gridder">
-                        <div class="title-container">
-                            <p class="title">
-                                Add a New Configuration
-                            </p>
-                            <p class="description">
-                                Please fill out the form below to add a new configuration.
-                            </p>
+            {% if user.is_authenticated %}
+                <section>
+                    <div class="flexer">
+                        <div class="gridder">
+                            <div class="title-container">
+                                <p class="title">
+                                    Add a New Configuration
+                                </p>
+                                <p class="description">
+                                    Please fill out the form below to add a new configuration.
+                                </p>
+                            </div>
+                            <form class="form-container" action="" method="post">
+                                {% csrf_token %}
+                                <div class="element-container-none">
+                                    <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label">Select Subsystem Config:</label>
+                                </div>
+                                <div class="element-container-radio">
+                                    <div class="radio-container">
+                                        <label class="form-radio" for="id_SubsystemConfig_0">
+                                            <input type="radio" name="SubsystemConfig" value="" class="form-radio-button" id="id_SubsystemConfig_0" checked="">
+                                            ---------
+                                        </label>
+                                    </div>
+                                    {% for subconfig in subsystemconfigs %}
+                                        <div class="radio-container">
+                                            <label class="form-radio" for="id_SubsystemConfig_{{subconfig.id}}">
+                                                <input type="radio" name="SubsystemConfig" value="{{ subconfig.id }}" class="form-radio-button" id="id_SubsystemConfig_{{subconfig.id}}">
+                                                {{ subconfig }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label">Select Robot Config:</label>
+                                </div>
+                                <div class="element-container-radio">
+                                    <div class="radio-container">
+                                        <label class="form-radio" for="id_RobotConfig_0">
+                                            <input type="radio" name="RobotConfig" value="" class="form-radio-button" id="id_RobotConfig_0" checked="">
+                                            ---------
+                                        </label>
+                                    </div>
+                                    {% for robotconfig in robotconfigs %}
+                                        <div class="radio-container">
+                                            <label class="form-radio" for="id_RobotConfig_{{robotconfig.id}}">
+                                                <input type="radio" name="RobotConfig" value="{{ robotconfig.id }}" class="form-radio-button" id="id_RobotConfig_{{robotconfig.id}}">
+                                                {{ robotconfig }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="submit-btn">
+                                    Submit
+                                </button>
+                            </form>
                         </div>
-                        <form class="form-container" action="" method="post">
-                            {% csrf_token %}
-                            <div class="element-container-none">
-                                <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
-                            </div>
-                            <div class="element-container">
-                                <label for="{{ form.SubsystemConfig.id }}" class="form-label">Select Subsystem Config:</label>
-                            </div>
-                            <div class="element-container-radio">
-                                {{ form.SubsystemConfig }}
-                            </div>
-                            <div class="element-container">
-                                <label for="{{ form.RobotConfig.id }}" class="form-label">Select Robot Config:</label>
-                            </div>
-                            <div class="element-container-radio">
-                                {{ form.RobotConfig }}
-                            </div>
-                            <button class="submit-btn">
-                                Submit
-                            </button>
-                        </form>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
+                    </a>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>

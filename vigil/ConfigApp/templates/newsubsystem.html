@@ -57,37 +57,45 @@
                     {% endif %}
                 </div>
             </nav>
-            <section>
-                <div class="flexer">
-                    <div class="gridder">
-                        <div class="title-container">
-                            <p class="title">
-                                Add a New Subsystem
-                            </p>
-                            <p class="description">
-                                Please fill out the form below to add a new subsystem.
-                            </p>
+            {% if user.is_authenticated %}
+                <section>
+                    <div class="flexer">
+                        <div class="gridder">
+                            <div class="title-container">
+                                <p class="title">
+                                    Add a New Subsystem
+                                </p>
+                                <p class="description">
+                                    Please fill out the form below to add a new subsystem.
+                                </p>
+                            </div>
+                            <form class="form-container" action="" method="post">
+                                {% csrf_token %}
+                                <div class="element-container-none">
+                                    <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="Subsystem Name">Subsystem Name</label>
+                                    <input class="form-input" type="text" required value="Name" name="Subsystem Name">
+                                </div>
+                                <div class="element-container image-container">
+                                    <label class="form-label" for="Subsystem Image">Subsystem Image</label>
+                                    <input class="form-input" type="file" name="Subsystem Image">
+                                </div>
+                                <button class="submit-btn">
+                                    Submit
+                                </button>
+                            </form>
                         </div>
-                        <form class="form-container" action="" method="post">
-                            {% csrf_token %}
-                            <div class="element-container-none">
-                                <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
-                            </div>
-                            <div class="element-container">
-                                <label class="form-label" for="Subsystem Name">Subsystem Name</label>
-                                <input class="form-input" type="text" required value="Name" name="Subsystem Name">
-                            </div>
-                            <div class="element-container image-container">
-                                <label class="form-label" for="Subsystem Image">Subsystem Image</label>
-                                <input class="form-input" type="file" name="Subsystem Image">
-                            </div>
-                            <button class="submit-btn">
-                                Submit
-                            </button>
-                        </form>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
+                    </a>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>

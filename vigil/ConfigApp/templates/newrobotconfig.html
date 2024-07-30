@@ -57,49 +57,57 @@
                     {% endif %}
                 </div>
             </nav>
-            <section>
-                <div class="flexer">
-                    <div class="gridder">
-                        <div class="title-container">
-                            <p class="title">
-                                Add a New Robot Configuration
-                            </p>
-                            <p class="description">
-                                Please fill out the form below to add a new robot configuration.
-                            </p>
+            {% if user.is_authenticated %}
+                <section>
+                    <div class="flexer">
+                        <div class="gridder">
+                            <div class="title-container">
+                                <p class="title">
+                                    Add a New Robot Configuration
+                                </p>
+                                <p class="description">
+                                    Please fill out the form below to add a new robot configuration.
+                                </p>
+                            </div>
+                            <form class="form-container" action="" method="post">
+                                {% csrf_token %}
+                                <div class="element-container-none">
+                                    <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="Robot Name">Robot Name</label>
+                                    <input class="form-input" type="text" required value="Name" name="Robot Name">
+                                </div>
+                                <div class="element-container image-container">
+                                    <label class="form-label" for="Robot Image">Robot Image</label>
+                                    <input class="form-input" type="file" name="Robot Image">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="FRC Year">FRC Year</label>
+                                    <input class="form-input" type="number" value=0 name="FRC Year">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="Team Number">Team Number</label>
+                                    <input class="form-input" type="number" value=0 name="Team Number">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="DriveTrain Type">DriveTrain Type</label>
+                                    <input class="form-input" type="text" value="Tank Drive" name="DriveTrain Type">
+                                </div>
+                                <button class="submit-btn">
+                                    Submit
+                                </button>
+                            </form>
                         </div>
-                        <form class="form-container" action="" method="post">
-                            {% csrf_token %}
-                            <div class="element-container-none">
-                                <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
-                            </div>
-                            <div class="element-container">
-                                <label class="form-label" for="Robot Name">Robot Name</label>
-                                <input class="form-input" type="text" required value="Name" name="Robot Name">
-                            </div>
-                            <div class="element-container image-container">
-                                <label class="form-label" for="Robot Image">Robot Image</label>
-                                <input class="form-input" type="file" name="Robot Image">
-                            </div>
-                            <div class="element-container">
-                                <label class="form-label" for="FRC Year">FRC Year</label>
-                                <input class="form-input" type="number" value=0 name="FRC Year">
-                            </div>
-                            <div class="element-container">
-                                <label class="form-label" for="Team Number">Team Number</label>
-                                <input class="form-input" type="number" value=0 name="Team Number">
-                            </div>
-                            <div class="element-container">
-                                <label class="form-label" for="DriveTrain Type">DriveTrain Type</label>
-                                <input class="form-input" type="text" value="Tank Drive" name="DriveTrain Type">
-                            </div>
-                            <button class="submit-btn">
-                                Submit
-                            </button>
-                        </form>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
+                    </a>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>

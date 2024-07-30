@@ -73,14 +73,18 @@
     border: none;
 }
 .form-radio {
+    position: relative;
     scale: 2;
+    font-size: 50px;
     margin-top: 18px;
     color: rgb(186,143,67);
 }
-.form-checkbox{
-    scale: 2;
-    margin-top: 11px;
-    color: rgb(186,143,67);
+.form-radio-button {
+    position: relative;
+    top: -8px;
+    left: -8px;
+    scale: 4;
+    margin-right: 10px;
 }
 .submit-btn {
     background-color: rgb(255, 209, 130);

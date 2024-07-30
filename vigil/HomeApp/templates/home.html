@@ -31,17 +31,17 @@
                                 Past Matches
                             </a>
                         </div>
+                        <div class="link-container">
+                            <a class="link" href="{% url 'config' %}">
+                                Config
+                            </a>
+                        </div>
+                        <div class="link-container">
+                            <a class="link" href="{% url 'analyze' %}">
+                                Analyze
+                            </a>
+                        </div>
                     {% endif %}
-                    <div class="link-container">
-                        <a class="link" href="{% url 'config' %}">
-                            Config
-                        </a>
-                    </div>
-                    <div class="link-container">
-                        <a class="link" href="{% url 'analyze' %}">
-                            Analyze
-                        </a>
-                    </div>
                     {% if not user.is_authenticated %}
                         <div class="link-container">
                             <a class="signin kanit" href="{% url 'login' %}">

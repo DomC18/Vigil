@@ -19,18 +19,18 @@ class RobotConfigForm(forms.ModelForm):
         model = RobotConfiguration
         fields = [
             "CreatedBy",
-            "Robot Name",
-            "Robot Image",
-            "FRC Year", 
-            "Team Number",
-            "DriveTrain Type"
+            "RobotName",
+            "RobotImage",
+            "FRCYear", 
+            "TeamNumber",
+            "DriveTrainType"
         ]
         widgets = {
-            "Robot Name": forms.TextInput(attrs={"class": "form-input"}),
-            "Robot Image": forms.FileInput(attrs={"class": "form-input"}),
-            "FRC Year": forms.NumberInput(attrs={"class": "form-input"}),
-            "Team Number": forms.NumberInput(attrs={"class": "form-input"}),
-            "DriveTrain Type": forms.TextInput(attrs={"class": "form-input"}),
+            "RobotName": forms.TextInput(attrs={"class": "form-input"}),
+            "RobotImage": forms.FileInput(attrs={"class": "form-input"}),
+            "FRCYear": forms.NumberInput(attrs={"class": "form-input"}),
+            "TeamNumber": forms.NumberInput(attrs={"class": "form-input"}),
+            "DriveTrainType": forms.TextInput(attrs={"class": "form-input"}),
         }
 
 class SubsystemConfigForm(forms.ModelForm):
@@ -51,10 +51,10 @@ class SubsystemForm(forms.ModelForm):
         model = Subsystem
         fields = [
             "CreatedBy",
-            "Subsystem Name",
-            "Subsystem Image"
+            "SubsystemName",
+            "SubsystemImage"
         ]
         widgets = {
-            "Subsystem Name": forms.TextInput(attrs={"class": "form-input"}),
-            "Subsystem Image": forms.FileInput(attrs={"class": "form-input"})
+            "SubsystemName": forms.TextInput(attrs={"class": "form-input"}),
+            "SubsystemImage": forms.FileInput(attrs={"class": "form-input"})
         }
