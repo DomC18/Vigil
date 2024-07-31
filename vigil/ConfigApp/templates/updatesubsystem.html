@@ -63,10 +63,10 @@
                         <div class="gridder">
                             <div class="title-container">
                                 <p class="title">
-                                    Add a New Subsystem
+                                    Edit {{instance.SubsystemName}} Subsystem
                                 </p>
                                 <p class="description">
-                                    Please fill out the form below to add a new subsystem.
+                                    Please fill out the form below to edit info for your "{{instance.SubsystemName}}" subsystem.
                                 </p>
                             </div>
                             <form class="form-container" action="" method="post">
@@ -76,15 +76,13 @@
                                 </div>
                                 <div class="element-container">
                                     <label class="form-label" for="SubsystemName">Subsystem Name</label>
-                                    <input class="form-input" type="text" required value="Name" name="SubsystemName">
+                                    <input class="form-input" type="text" required value="{{ instance.SubsystemName }}" name="SubsystemName">
                                 </div>
                                 <div class="element-container image-container">
                                     <label class="form-label" for="SubsystemImage">Subsystem Image</label>
                                     <input class="form-input" type="file" name="SubsystemImage">
                                 </div>
-                                <button class="submit-btn">
-                                    Submit
-                                </button>
+                                <input class="submit-btn" type="submit" value="Edit">
                             </form>
                         </div>
                     </div>

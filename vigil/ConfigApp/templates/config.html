@@ -62,64 +62,215 @@
                     <div class="old-configs-container">
                         <div class="config-title-container">
                             <p class="config-title">
-                                Load Configs Here
+                                Load Configs
                             </p>
                         </div>
-                        <div class="pages-container">
-                            <a class="page-link" href="{% url 'robotconfigs' %}">
-                                Robot Configs
-                            </a>
-                            <a class="page-link" href="{% url 'subsystemconfigs' %}">
-                                Subsystem Configs
-                            </a>
-                            <a class="page-link" href="{% url 'subsystems' %}">
-                                Subsystems
-                            </a>
-                        </div>
-                        {% for config in content %}
-                            <div class="curr-config-container">
-                                <p class="curr-config-title">
-                                    Current Configuration:  
-                                </p>
-                                <p class="curr-config-info">
-                                    {{ config.SubsystemConfig }} - {{ config.RobotConfig }}
-                                </p>
-                            </div>
-                        {% endfor %}
-                        <div class="many-configs-container">
-                            {% for config in configcontent %}
-                                <div class="config-container">
-                                    <p class="config-name">
-                                        {{ config.RobotName }}
-                                        {{ config.SubConfigName }}
-                                        {{ config.SubsystemName }}
+                        <div class="config-specs-container">
+                            {% for config in content %}
+                                <div class="curr-config-container">
+                                    <p class="curr-config-title">
+                                        Current Configuration:
                                     </p>
-                                </div>  
+                                    <p class="curr-config-info">
+                                        {{ config.RobotConfig }} - {{ config.SubsystemConfig }}
+                                    </p>
+                                </div>
                             {% endfor %}
+                            <div class="many-configs-container">
+                                {% for config in configcontent %}
+                                    <div class="config-card">
+                                        <div class="config-spec-container">
+                                            <div class="config-info-container">
+                                                {% if config.RobotName %}
+                                                    <div class="active-container">
+                                                        {% for cc in content %}
+                                                            {% if cc.RobotConfig == config %}
+                                                                <a class="active-link" href="{% url 'activaterobotconfig' config.id %}" style="background-color: green;">
+                                                                    .
+                                                                </a>
+                                                            {% else %}
+                                                                <a class="active-link" href="{% url 'activaterobotconfig' config.id %}">
+                                                                    .
+                                                                </a>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if config.SubConfigName %}
+                                                    <div class="active-container">
+                                                        {% for cc in content %}
+                                                            {% if cc.SubsystemConfig == config %}
+                                                                <a class="active-link" href="{% url 'activatesubsystemconfig' config.id %}" style="background-color: green;">
+                                                                    .
+                                                                </a>
+                                                            {% else %}
+                                                                <a class="active-link" href="{% url 'activatesubsystemconfig' config.id %}">
+                                                                    .
+                                                                </a>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                <div class="config-essentials-container">
+                                                    <p class="config-name">
+                                                        {{ config.RobotName }}
+                                                        {{ config.SubConfigName }}
+                                                        {{ config.SubsystemName }}
+                                                    </p>
+                                                    {% if config.Subsystems.all %}
+                                                        <p class="config-info" style="text-decoration: underline;">
+                                                            Subsystems:
+                                                        </p>
+                                                    {% endif %}
+                                                    {% if config.FRCYear %}
+                                                        <p class="config-info">
+                                                            Year- {{ config.FRCYear }}
+                                                        </p>
+                                                    {% endif %}
+                                                    {% if config.TeamNumber %}
+                                                        <p class="config-info" style="margin-bottom: 8px;">
+                                                            Team {{ config.TeamNumber }}
+                                                        </p>
+                                                    {% endif %}
+                                                    <div class="config-children-container">
+                                                        {% for sub in config.Subsystems.all %}
+                                                            <div class="config-child-card">
+                                                                <div class="config-child-name-container">
+                                                                    <p class="config-child-name">
+                                                                        {{ sub.SubsystemName }}
+                                                                    </p>
+                                                                </div>
+                                                                {% if sub.SubsystemImage %}
+                                                                    <div class="config-child-img-container">
+                                                                        <img class="config-child-img" src="{{ sub.SubsystemImage.url }}" draggable="false" alt="">
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="config-extra-container">
+                                                <div class="config-img-container">
+                                                    {% if config.RobotImage %}
+                                                        <img class="config-img" src="{{ config.RobotImage.url }}" draggable="false" alt="">
+                                                    {% endif %}
+                                                    {% if config.SubsystemImage %}
+                                                        <img class="config-img" src="{{ config.SubsystemImage.url }}" draggable="false" alt="">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="actions-container">
+                                                    {% if config.RobotName %}
+                                                        <div>
+                                                            <a class="edit-btn" href="{% url 'editrobotconfig' config.id %}">
+                                                                Edit
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if config.SubConfigName %}
+                                                        <div>
+                                                            <a class="edit-btn" href="{% url 'editsubsystemconfig' config.id %}">
+                                                                Edit
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if config.SubsystemName %}
+                                                        <div>
+                                                            <a class="edit-btn" href="{% url 'editsubsystem' config.id %}">
+                                                                Edit
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if config.RobotName %}
+                                                        <div>
+                                                            <a class="delete-btn" href="{% url 'deleterobotconfig' config.id %}">
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if config.SubConfigName %}
+                                                        <div>
+                                                            <a class="delete-btn" href="{% url 'deletesubsystemconfig' config.id %}">
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if config.SubsystemName %}
+                                                        <div>
+                                                            <a class="delete-btn" href="{% url 'deletesubsystem' config.id %}">
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="pages-container">
+                                {% if link_index == 0 %}
+                                    <a style="background-color: rgb(76, 76, 76);" class="page-link" href="{% url 'robotconfigs' %}">
+                                        Robot Configs
+                                    </a>
+                                {% else %}
+                                    <a class="page-link" href="{% url 'robotconfigs' %}">
+                                        Robot Configs
+                                    </a>
+                                {% endif %}
+                                {% if link_index == 1 %}
+                                    <a style="background-color: rgb(76, 76, 76);" class="page-link" href="{% url 'subsystemconfigs' %}">
+                                        Subsystem Configs
+                                    </a>
+                                {% else %}
+                                    <a class="page-link" href="{% url 'subsystemconfigs' %}">
+                                        Subsystem Configs
+                                    </a>
+                                {% endif %}
+                                {% if link_index == 2 %}
+                                    <a style="background-color: rgb(76, 76, 76);" class="page-link" href="{% url 'subsystems' %}">
+                                        Subsystems
+                                    </a>
+                                {% else %}
+                                    <a class="page-link" href="{% url 'subsystems' %}">
+                                        Subsystems
+                                    </a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                     <div class="new-configs-container">
                         <div class="config-title-container">
                             <p class="config-title">
-                                New Configs Here
+                                New Configs
                             </p>
                         </div>
-                        {% if display_curr_config %}
-                            <a href="{% url 'newcurrentconfig' %}">
-                                New Config
-                            </a>
-                        {% endif %}
-                        <a href="{% url 'newrobotconfig' %}">
-                            New Robot Config
-                        </a>
-                        {% if display_sub_config %}
-                            <a href="{% url 'newsubsystemconfig' %}">
-                                New Subsystem Config
-                            </a>
-                        {% endif %}
-                        <a href="{% url 'newsubsystem' %}">
-                            New Subsystem
-                        </a>
+                        <div class="create-config-container">
+                            {% if display_curr_config %}
+                                <div class="config-link-container">
+                                    <a class="create-config-link" href="{% url 'newcurrentconfig' %}">
+                                        New Config
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="config-link-container">
+                                <a class="create-config-link" href="{% url 'newrobotconfig' %}">
+                                    New Robot Config
+                                </a>
+                            </div>
+                            {% if display_sub_config %}
+                                <div class="config-link-container">
+                                    <a class="create-config-link" href="{% url 'newsubsystemconfig' %}">
+                                        New Subsystem Config
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="config-link-container">
+                                <a class="create-config-link" href="{% url 'newsubsystem' %}">
+                                    New Subsystem
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </section>
             {% else %}

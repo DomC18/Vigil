@@ -4,17 +4,192 @@
     justify-content: center;
     text-align: center;
     margin-top: 50px;
-}
-.config-title-container {
-
-}
-.config-title {
-    
+    height: 900px;
 }
 
 .old-configs-container {
     flex: 1;
+    margin-left: 20px;
+    margin-right: 10px;
+    display: grid;
+    grid-template-rows: 100px 800px;
 }
+.config-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.config-title {
+    font-size: 60px;
+    color: rgb(250,193,93);
+    margin: 0px;
+}
+
+.config-specs-container {
+    display: grid;
+    grid-template-rows: 100px 600px 100px;
+    border: solid 1px grey;
+    border-radius: 20px;
+}
+.curr-config-container {
+    
+}
+.curr-config-title {
+
+}
+.curr-config-info {
+
+}
+
+.many-configs-container {
+    overflow-y: scroll;
+    border: solid 4px rgba(0, 0, 0, 0.599);
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.many-configs-container::-webkit-scrollbar {
+    display: none;
+}
+.config-card {
+    margin: 14px;
+    border: solid 1px grey;
+}
+.config-spec-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.config-info-container {
+    text-align: left;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.active-container {
+    display: inline-block;
+    padding: 0px 18px 0px 0px;
+}
+.active-link {
+    font-size: 20px;
+    border: solid 5px black;
+    border-radius: 20px;
+    color: rgba(0, 0, 0, 0);
+    background-color: red;
+    display: block;
+    width: 27px;
+}
+.config-essentials-container { 
+    display: inline-block;
+}
+.config-name {
+    font-size: 60px;
+    color: rgb(250,193,93);
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.config-info {
+    font-size: 40px;
+    color: rgb(186,143,67);
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+.config-extra-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.config-img-container {
+    padding-right: 10px;
+    display: inline-block;
+}
+.config-img {
+    width: 200px;
+    height: 200px;
+}
+.actions-container {
+    display: inline-block;
+    padding: 0px 12px 0px 6px;
+}
+.edit-btn, .delete-btn {
+    font-size: 30px;
+    transition: all 0.25s ease-in-out;
+}
+.edit-btn:hover, .delete-btn:hover {
+    font-size: 32px;
+}
+.edit-btn {
+    color: rgb(0, 191, 255);
+}
+.delete-btn {
+    color: rgb(255, 23, 23);
+}
+
+.config-child-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.config-child-name-container {
+    text-align: left;
+    padding-left: 8px;
+}
+.config-child-name {
+    font-size: 30px;
+    color: rgb(186,143,67);
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+.config-child-img-container {
+    padding-right: 8px;
+}
+.config-child-img {
+    width: 100px;
+    height: 100px;
+}
+
+.pages-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.page-link, .create-config-link {
+    color: rgb(250, 193, 93);
+    background-color: rgb(40, 40, 40);
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: solid 2px black;
+    transition: all 0.35s ease-in-out;
+}
+.page-link {
+    font-size: 28px;
+}
+.page-link:hover, .create-config-link:hover {
+    background-color: rgb(76, 76, 76);
+}
+.page-link:active, .create-config-link:active {
+    background-color: rgb(80, 80, 80);
+}
+
+
 .new-configs-container {
     flex: 1;
+    display: grid;
+    margin-left: 10px;
+    margin-right: 20px;
+    grid-template-rows: 100px 800px;
+}
+.create-config-container {
+    border: solid 1px grey;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.create-config-link {
+    font-size: 40px;
 }

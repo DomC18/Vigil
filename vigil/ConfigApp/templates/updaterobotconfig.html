@@ -63,10 +63,10 @@
                         <div class="gridder">
                             <div class="title-container">
                                 <p class="title">
-                                    Add a New Subsystem
+                                    Edit {{instance.RobotName}} Configuration
                                 </p>
                                 <p class="description">
-                                    Please fill out the form below to add a new subsystem.
+                                    Please fill out the form below to edit your configuration for "{{instance.RobotName}}".
                                 </p>
                             </div>
                             <form class="form-container" action="" method="post">
@@ -75,16 +75,26 @@
                                     <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
                                 </div>
                                 <div class="element-container">
-                                    <label class="form-label" for="SubsystemName">Subsystem Name</label>
-                                    <input class="form-input" type="text" required value="Name" name="SubsystemName">
+                                    <label class="form-label" for="RobotName">Robot Name</label>
+                                    <input class="form-input" type="text" required value="{{ instance.RobotName }}" name="RobotName">
                                 </div>
                                 <div class="element-container image-container">
-                                    <label class="form-label" for="SubsystemImage">Subsystem Image</label>
-                                    <input class="form-input" type="file" name="SubsystemImage">
+                                    <label class="form-label" for="RobotImage">Robot Image</label>
+                                    <input class="form-input" type="file" name="RobotImage">
                                 </div>
-                                <button class="submit-btn">
-                                    Submit
-                                </button>
+                                <div class="element-container">
+                                    <label class="form-label" for="FRCYear">FRC Year</label>
+                                    <input class="form-input" type="number" value="{{ instance.FRCYear }}"" name="FRCYear">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="TeamNumber">Team Number</label>
+                                    <input class="form-input" type="number" value="{{ instance.TeamNumber }}" name="TeamNumber">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="DriveTrainType">DriveTrain Type</label>
+                                    <input class="form-input" type="text" value="{{ instance.DriveTrainType }}" name="DriveTrainType">
+                                </div>
+                                <input class="submit-btn" type="submit" value="Edit">
                             </form>
                         </div>
                     </div>

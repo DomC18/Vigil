@@ -63,10 +63,10 @@
                         <div class="gridder">
                             <div class="title-container">
                                 <p class="title">
-                                    Add a New Subsystem
+                                    Edit {{instance.SubConfigName}} Configuration
                                 </p>
                                 <p class="description">
-                                    Please fill out the form below to add a new subsystem.
+                                    Please fill out the form below to edit your configuration for "{{instance.SubConfigName}}.
                                 </p>
                             </div>
                             <form class="form-container" action="" method="post">
@@ -74,17 +74,24 @@
                                 <div class="element-container-none">
                                     <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
                                 </div>
+                                <div class="element-container-long">
+                                    <label for="SubConfigName" class="form-label" style="text-align: center;">Subsystem Config Name</label>
+                                    <input class="form-input" type="text" required value="{{ instance.SubConfigName }}" name="SubConfigName">
+                                </div>
                                 <div class="element-container">
-                                    <label class="form-label" for="SubsystemName">Subsystem Name</label>
-                                    <input class="form-input" type="text" required value="Name" name="SubsystemName">
+                                    <label for="{{ form.Subsystems.id }}" class="form-label">Select Subsystems</label>
                                 </div>
-                                <div class="element-container image-container">
-                                    <label class="form-label" for="SubsystemImage">Subsystem Image</label>
-                                    <input class="form-input" type="file" name="SubsystemImage">
+                                <div class="element-container-radio">
+                                    {% for subsystem in subsystems %}
+                                        <div class="radio-container">
+                                            <label class="form-radio" for="id_Subsystems_{{subsystem.id}}">
+                                                <input type="checkbox" name="Subsystems" value="{{ subsystem.id }}" class="form-radio-button" id="id_Subsystems_{{subsystem.id}}">
+                                                {{ subsystem }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <button class="submit-btn">
-                                    Submit
-                                </button>
+                                <input class="submit-btn" type="submit" value="Edit">
                             </form>
                         </div>
                     </div>
