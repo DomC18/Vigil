@@ -69,7 +69,7 @@
                                     Please fill out the form below to add a new robot configuration.
                                 </p>
                             </div>
-                            <form class="form-container" action="" method="post">
+                            <form class="form-container" action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="element-container-none">
                                     <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">

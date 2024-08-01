@@ -1,11 +1,10 @@
 from django.db import models
 from datetime import datetime
-import globalvariables as gv
 
 class Subsystem(models.Model):
     created_by = models.CharField(name="CreatedBy", max_length=50, default="dmac")
     name = models.CharField(name="SubsystemName", max_length=50)
-    image = models.ImageField(name="SubsystemImage", blank=True, null=True)
+    image = models.ImageField(name="SubsystemImage", blank=True, null=True, upload_to="images/")
 
     def __str__(self):
         return f"{self.SubsystemName}"
@@ -23,7 +22,7 @@ class SubsystemConfiguration(models.Model):
 class RobotConfiguration(models.Model):
     created_by = models.CharField(name="CreatedBy", max_length=50, default="dmac")
     name = models.CharField(name="RobotName", default="NewRobot", max_length=50, blank=False)
-    image = models.ImageField(name="RobotImage", blank=True, null=True)
+    image = models.ImageField(name="RobotImage", blank=True, null=True, upload_to="images/")
     year = models.IntegerField(name="FRCYear", default=datetime.now().year, blank=True)
     team_number = models.IntegerField(name="TeamNumber", default=0, blank=True)
     drivetrain_type = models.CharField(name="DriveTrainType", default="Tank Drive", max_length=50, blank=True)

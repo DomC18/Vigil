@@ -58,7 +58,7 @@ def deletesubsystem(request, sub_id):
 
 def editrobotconfig(request, robotconfig_id):
     robotconfig = RobotConfiguration.objects.get(pk=robotconfig_id)
-    form = RobotConfigForm(request.POST or None, instance=robotconfig)
+    form = RobotConfigForm(request.POST or None, request.FILES, instance=robotconfig)
     if form.is_valid():
         form.save()
         return redirect('robotconfigs')
@@ -75,7 +75,7 @@ def editsubsystemconfig(request, subconfig_id):
 
 def editsubsystem(request, sub_id):
     subsystem = Subsystem.objects.get(pk=sub_id)
-    form = SubsystemForm(request.POST or None, instance=subsystem)
+    form = SubsystemForm(request.POST or None, request.FILES, instance=subsystem)
     if form.is_valid():
         form.save()
         return redirect('subsystems')
@@ -111,7 +111,7 @@ def newcurrentconfig(request:WSGIRequest):
 
 def newrobotconfig(request:WSGIRequest):
     if request.method == "POST":
-        form = RobotConfigForm(request.POST)
+        form = RobotConfigForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('config')
@@ -132,7 +132,7 @@ def newsubsystemconfig(request:WSGIRequest):
 
 def newsubsystem(request:WSGIRequest):
     if request.method == "POST":
-        form = SubsystemForm(request.POST)
+        form = SubsystemForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('config')

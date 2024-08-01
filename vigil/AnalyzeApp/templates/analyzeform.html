@@ -31,17 +31,17 @@
                                 Past Matches
                             </a>
                         </div>
+                        <div class="link-container">
+                            <a class="link" href="{% url 'config' %}">
+                                Config
+                            </a>
+                        </div>
+                        <div class="link-container">
+                            <a class="link" href="{% url 'analyze' %}">
+                                Analyze
+                            </a>
+                        </div>
                     {% endif %}
-                    <div class="link-container">
-                        <a class="link" href="{% url 'config' %}">
-                            Config
-                        </a>
-                    </div>
-                    <div class="link-container">
-                        <a class="link" href="{% url 'analyze' %}">
-                            Analyze
-                        </a>
-                    </div>
                     {% if not user.is_authenticated %}
                         <div class="link-container">
                             <a class="signin kanit" href="{% url 'login' %}">
@@ -57,6 +57,31 @@
                     {% endif %}
                 </div>
             </nav>
+            {% if user.is_authenticated %}
+                <section class="analyze-section-container">
+                    <div class="flexer">
+                        <div class="gridder">
+                            <div class="title-container">
+                                <p class="title">
+                                    Add a File to Analyze
+                                </p>
+                                <p class="description">
+                                    Please fill out the form below to begin analyzing a match.
+                                </p>
+                            </div>
+                            <form class="form-container" action="">
+                                
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
+                    </a>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>
