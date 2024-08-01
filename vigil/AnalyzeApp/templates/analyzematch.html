@@ -5,16 +5,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vigil Analyze</title>
-        <link rel="stylesheet" href="{% static 'analyzeform/styles/general.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzeform/styles/form.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzeform/styles/navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzematch/styles/general.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzematch/styles/form.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzematch/styles/navbar.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        <script defer src="{% static 'analyzeform/js/home.js' %}"></script>
+        <script defer src="{% static 'analyzematch/js/home.js' %}"></script>
     </head>
     <body>
         <main>
@@ -59,46 +59,7 @@
             </nav>
             {% if user.is_authenticated %}
                 <section>
-                    <div class="flexer">
-                        <div class="gridder">
-                            <div class="title-container">
-                                <p class="title">
-                                    Add a File to Analyze
-                                </p>
-                                <p class="description">
-                                    Please fill out the form below to begin analyzing a match.
-                                </p>
-                            </div>
-                            <form class="form-container" action="" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="element-container-none">
-                                    <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
-                                </div>
-                                <div class="element-container-none">
-                                    <select class="input-none" name="CurrentConfig" id="id_CurrentConfig">
-                                        <option value="{{currconfig.id}}" selected>
-                                            {{currconfig}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="element-container">
-                                    <label class="form-label" for="CompName">Competition Name</label>
-                                    <input class="form-input" type="text" required value="Name" name="CompName">
-                                </div>
-                                <div class="element-container">
-                                    <label class="form-label" for="MatchNumber">Match Number</label>
-                                    <input class="form-input" type="number" value=0 name="MatchNumber">
-                                </div>
-                                <div class="element-container image-container">
-                                    <label class="form-label" for="AnalyzeFile">File To Analyze</label>
-                                    <input class="form-input" type="file" name="AnalyzeFile">
-                                </div>
-                                <button class="submit-btn">
-                                    Submit
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                    {{currentdata}}
                 </section>
             {% else %}
                 <section class="login-request-container">
