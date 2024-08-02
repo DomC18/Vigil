@@ -59,7 +59,11 @@
             </nav>
             {% if user.is_authenticated %}
                 <section>
-                    {{currentdata}}
+                    {% for graph in graphs %}
+                        <div class="graph-container">
+                            {{graph|safe}}
+                        </div>
+                    {% endfor %}
                 </section>
             {% else %}
                 <section class="login-request-container">
