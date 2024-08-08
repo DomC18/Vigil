@@ -1,0 +1,83 @@
+.many-matches-container {
+    border: solid 4px rgba(0, 0, 0, 0.599);
+    margin: 80px 28px 0px 28px;
+}
+.match-card {
+    margin: 14px;
+    border: solid 1px grey;
+}
+.match-spec-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.match-info-container {
+    text-align: left;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.active-container {
+    display: inline-block;
+    padding: 0px 18px 0px 0px;
+}
+.active-link {
+    font-size: 20px;
+    border: solid 5px black;
+    border-radius: 20px;
+    color: rgba(0, 0, 0, 0);
+    background-color: red;
+    display: block;
+    width: 27px;
+}
+.match-essentials-container { 
+    display: inline-block;
+}
+.match-name {
+    font-size: 60px;
+    color: rgb(250,193,93);
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.match-info {
+    font-size: 40px;
+    color: rgb(186,143,67);
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+.match-extra-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.match-img-container {
+    padding-right: 10px;
+    display: inline-block;
+}
+.match-img {
+    width: 200px;
+    height: 200px;
+}
+.actions-container {
+    display: inline-block;
+    padding: 0px 12px 0px 6px;
+}
+.edit-btn, .delete-btn, .open-btn {
+    font-size: 30px;
+    transition: all 0.25s ease-in-out;
+}
+.edit-btn:hover, .delete-btn:hover, .open-btn:hover {
+    font-size: 32px;
+}
+.edit-btn {
+    color: rgb(0, 191, 255);
+}
+.delete-btn {
+    color: rgb(255, 23, 23);
+}
+.open-btn {
+    color: rgb(127, 205, 187);
+}

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'analyzematch/styles/general.css' %}">
         <link rel="stylesheet" href="{% static 'analyzematch/styles/form.css' %}">
         <link rel="stylesheet" href="{% static 'analyzematch/styles/navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzematch/styles/graphs.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -58,10 +59,15 @@
                 </div>
             </nav>
             {% if user.is_authenticated %}
-                <section>
-                    {% for graph in graphs %}
+                <section class="graphs-container">
+                    {% for sub, graphs in grouping.items %}
                         <div class="graph-container">
-                            {{graph|safe}}
+                            <p>
+                                {{sub}}:
+                            </p>
+                            {% for graph in graphs %}
+                                {{graph|safe}}
+                            {% endfor %}
                         </div>
                     {% endfor %}
                 </section>

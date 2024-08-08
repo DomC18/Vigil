@@ -74,12 +74,14 @@
                                 <div class="element-container-none">
                                     <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
                                 </div>
-                                <div class="element-container-none">
+                                <div class="element-container-using">
                                     <select class="input-none" name="CurrentConfig" id="id_CurrentConfig">
                                         <option value="{{currconfig.id}}" selected>
                                             {{currconfig}}
                                         </option>
                                     </select>
+                                    <label class="form-label">Using Config:</label>
+                                    <label class="form-label">{{currconfig.SubsystemConfig}} - {{currconfig.RobotConfig}}</label>
                                 </div>
                                 <div class="element-container">
                                     <label class="form-label" for="CompName">Competition Name</label>

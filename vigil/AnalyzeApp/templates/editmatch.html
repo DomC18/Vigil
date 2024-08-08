@@ -4,17 +4,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vigil Config</title>
-        <link rel="stylesheet" href="{% static 'newconfig/styles/general.css' %}">
-        <link rel="stylesheet" href="{% static 'newconfig/styles/navbar.css' %}">
-        <link rel="stylesheet" href="{% static 'newconfig/styles/form.css' %}">
+        <title>Vigil Analyze</title>
+        <link rel="stylesheet" href="{% static 'analyzeform/styles/general.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzeform/styles/form.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzeform/styles/navbar.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        <script defer src="{% static 'newconfig/js/home.js' %}"></script>
+        <script defer src="{% static 'analyzeform/js/home.js' %}"></script>
     </head>
     <body>
         <main>
@@ -31,17 +31,17 @@
                                 Past Matches
                             </a>
                         </div>
+                        <div class="link-container">
+                            <a class="link" href="{% url 'config' %}">
+                                Config
+                            </a>
+                        </div>
+                        <div class="link-container">
+                            <a class="link" href="{% url 'analyze' %}">
+                                Analyze
+                            </a>
+                        </div>
                     {% endif %}
-                    <div class="link-container">
-                        <a class="link" href="{% url 'config' %}">
-                            Config
-                        </a>
-                    </div>
-                    <div class="link-container">
-                        <a class="link" href="{% url 'analyze' %}">
-                            Analyze
-                        </a>
-                    </div>
                     {% if not user.is_authenticated %}
                         <div class="link-container">
                             <a class="signin kanit" href="{% url 'login' %}">
@@ -63,10 +63,10 @@
                         <div class="gridder">
                             <div class="title-container">
                                 <p class="title">
-                                    Edit {{instance.RobotName}} Configuration
+                                    Edit Analyze Configuration
                                 </p>
                                 <p class="description">
-                                    Please fill out the form below to edit your configuration for "{{instance.RobotName}}".
+                                    Please fill out the form below to edit a match config.
                                 </p>
                             </div>
                             <form class="form-container" action="" method="post" enctype="multipart/form-data">
@@ -74,25 +74,26 @@
                                 <div class="element-container-none">
                                     <input class="input-none" type="text" value="{{ name }}" name="CreatedBy">
                                 </div>
+                                <div class="element-container-using">
+                                    <select class="input-none" name="CurrentConfig" id="id_CurrentConfig">
+                                        <option value="{{currconfig.id}}" selected>
+                                            {{currconfig}}
+                                        </option>
+                                    </select>
+                                    <label class="form-label">Using Config:</label>
+                                    <label class="form-label">{{currconfig.SubsystemConfig}} - {{currconfig.RobotConfig}}</label>
+                                </div>
                                 <div class="element-container">
-                                    <label class="form-label" for="RobotName">Robot Name</label>
-                                    <input class="form-input" type="text" required value="{{ instance.RobotName }}" name="RobotName">
+                                    <label class="form-label" for="CompName">Competition Name</label>
+                                    <input class="form-input" type="text" required value="{{instance.CompName}}" name="CompName">
+                                </div>
+                                <div class="element-container">
+                                    <label class="form-label" for="MatchNumber">Match Number</label>
+                                    <input class="form-input" type="number" required value="{{instance.MatchNumber}}" name="MatchNumber">
                                 </div>
                                 <div class="element-container image-container">
-                                    <label class="form-label" for="RobotImage">Robot Image</label>
-                                    <input class="form-input" type="file" name="RobotImage">
-                                </div>
-                                <div class="element-container">
-                                    <label class="form-label" for="FRCYear">FRC Year</label>
-                                    <input class="form-input" type="number" value="{{ instance.FRCYear }}" name="FRCYear">
-                                </div>
-                                <div class="element-container">
-                                    <label class="form-label" for="TeamNumber">Team Number</label>
-                                    <input class="form-input" type="number" value="{{ instance.TeamNumber }}" name="TeamNumber">
-                                </div>
-                                <div class="element-container">
-                                    <label class="form-label" for="DriveTrainType">DriveTrain Type</label>
-                                    <input class="form-input" type="text" value="{{ instance.DriveTrainType }}" name="DriveTrainType">
+                                    <label class="form-label" for="AnalyzeFile">File To Analyze</label>
+                                    <input class="form-input" type="file" name="AnalyzeFile">
                                 </div>
                                 <input class="submit-btn" type="submit" value="Edit">
                             </form>

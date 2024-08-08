@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'HomeApp',
     'MembersApp',
     'ConfigApp',
-    'PastMatchesApp',
     'AnalyzeApp'
 ]
 

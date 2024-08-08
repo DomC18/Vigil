@@ -5,9 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vigil Past Matches</title>
-        <link rel="stylesheet" href="{% static 'styles/general.css' %}">
-        <link rel="stylesheet" href="{% static 'styles/header.css' %}">
-        <link rel="stylesheet" href="{% static 'styles/navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'pastmatches/styles/general.css' %}">
+        <link rel="stylesheet" href="{% static 'pastmatches/styles/matches.css' %}">
+        <link rel="stylesheet" href="{% static 'pastmatches/styles/navbar.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -57,6 +57,51 @@
                     {% endif %}
                 </div>
             </nav>
+            {% if user.is_authenticated %}
+                <section class="many-matches-container">
+                    {% for match in matchcontent %}
+                        <div class="match-card">
+                            <div class="match-spec-container">
+                                <div class="match-info-container">
+                                    <div class="match-essentials-container">
+                                        <p class="match-name">
+                                            {{match.CompName}}
+                                        </p>
+                                        <p class="match-info">
+                                            {{match.MatchNumber}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="match-extra-container">
+                                    <div class="actions-container">
+                                        <div>
+                                            <a class="open-btn" href="{% url 'openmatch' match.id %}">
+                                                Open
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class="edit-btn" href="{% url 'editmatch' match.id %}">
+                                                Edit
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class="delete-btn" href="{% url 'deletematch' match.id %}">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% else %}
+                <section class="login-request-container">
+                    <a class="login-request" href="{% url 'login' %}">
+                        Please login to gain access to this content.
+                    </a>
+                </section>
+            {% endif %}
         </main>
     </body>
 </html>

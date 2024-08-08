@@ -24,7 +24,6 @@ urlpatterns = [
     path("", include("HomeApp.urls")),
     path("", include("MembersApp.urls")),
     path("", include("ConfigApp.urls")),
-    path("", include("PastMatchesApp.urls")),
     path("", include("AnalyzeApp.urls"))
 ]
 

@@ -32,6 +32,18 @@ body {
     font-family: "Kanit", "Open Sans", Arial, Helvetica, sans-serif;
 }
 
+.login-request-container {
+    display: flex;
+    text-align: center;
+    margin-top: 50px;
+    height: 800px;
+    align-items: center;
+}
+.login-request {
+    font-size: 100px;
+    color: rgb(250,193,93);
+}
+
 /* 
     https://colorkit.co/color/fac15d/ 
     https://www.rgbtohex.net/hex-to-rgb/   -->   #BA8F43
