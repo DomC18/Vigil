@@ -58,42 +58,49 @@
                 </div>
             </nav>
             {% if user.is_authenticated %}
-                <section class="many-matches-container">
-                    {% for match in matchcontent %}
-                        <div class="match-card">
-                            <div class="match-spec-container">
-                                <div class="match-info-container">
-                                    <div class="match-essentials-container">
-                                        <p class="match-name">
-                                            {{match.CompName}}
-                                        </p>
-                                        <p class="match-info">
-                                            {{match.MatchNumber}}
-                                        </p>
+                <section class="gridder">
+                    <div class="title-container">
+                        <p class="title">
+                            Past Matches
+                        </p>
+                    </div>
+                    <div class="many-matches-container">
+                        {% for match in matchcontent %}
+                            <div class="match-card">
+                                <div class="match-spec-container">
+                                    <div class="match-info-container">
+                                        <div class="match-essentials-container">
+                                            <p class="match-name">
+                                                Competition: {{match.CompName}}
+                                            </p>
+                                            <p class="match-info">
+                                                Match #{{match.MatchNumber}}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="match-extra-container">
-                                    <div class="actions-container">
-                                        <div>
-                                            <a class="open-btn" href="{% url 'openmatch' match.id %}">
-                                                Open
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a class="edit-btn" href="{% url 'editmatch' match.id %}">
-                                                Edit
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a class="delete-btn" href="{% url 'deletematch' match.id %}">
-                                                Delete
-                                            </a>
+                                    <div class="match-extra-container">
+                                        <div class="actions-container">
+                                            <div>
+                                                <a class="open-btn" href="{% url 'openmatch' match.id %}">
+                                                    Open
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="edit-btn" href="{% url 'editmatch' match.id %}">
+                                                    Edit
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="delete-btn" href="{% url 'deletematch' match.id %}">
+                                                    Delete
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </section>
             {% else %}
                 <section class="login-request-container">

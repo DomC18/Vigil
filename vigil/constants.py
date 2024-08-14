@@ -1,0 +1,1 @@
+args = ["velo", "velocity", "speed", "position", "posi", "pos", "duty", "rotations", "rotation", "rot"]

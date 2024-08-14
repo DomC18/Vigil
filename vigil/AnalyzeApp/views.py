@@ -2,7 +2,7 @@ from .methods import get_all_with_username, last_with_username
 from django.core.handlers.wsgi import WSGIRequest
 from ConfigApp.models import CurrentConfiguration
 from django.shortcuts import render, redirect
-from .graphs import LineGraph, get_numeric_columns, group_graphs
+from .graphs import group_graphs, adv_groups
 from .forms import AnalyzeConfigForm
 from .models import AnalyzeConfig
 import vigil.settings as settings
@@ -24,13 +24,10 @@ def analyze(request:WSGIRequest):
 
 def analyzematch(request:WSGIRequest):
     path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
-    columns = get_numeric_columns(path)
-    graphs = [LineGraph(path, col_name).to_html() for col_name in columns]
-
     currconfig = get_all_with_username(CurrentConfiguration)[0]
-    grouping = group_graphs(path, currconfig)
+    grouping = adv_groups(path, currconfig)
 
-    return render(request, 'analyzematch.html', {'name': gv.current_user, 'graphs': graphs, 'grouping': grouping})
+    return render(request, 'analyzematch.html', {'grouping': grouping})
 
 def pastmatches(request:WSGIRequest):
     matchcontent = get_all_with_username(AnalyzeConfig)

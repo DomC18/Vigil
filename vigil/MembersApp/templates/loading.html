@@ -4,18 +4,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vigil Analyze</title>
-        <link rel="stylesheet" href="{% static 'analyzematch/styles/general.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzematch/styles/form.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzematch/styles/navbar.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzematch/styles/graphs.css' %}">
+        <title>Loading</title>
+        <link rel="stylesheet" href="{% static 'styles/general.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/loading.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        <script defer src="{% static 'analyzematch/js/home.js' %}"></script>
+        <script defer src="{% static 'js/home.js' %}"></script>
     </head>
     <body>
         <main>
@@ -58,26 +57,35 @@
                     {% endif %}
                 </div>
             </nav>
-            {% if user.is_authenticated %}
-                <section class="graphs-container">
-                    {% for sub, group in grouping.items %}
-                        <div class="graph-container">
-                            {% if group|safe != 'None' %}
-                                <p class="subsystem-title kanit">
-                                    {{sub}}:
-                                </p>
-                                {{group|safe}}
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                </section>
-            {% else %}
-                <section class="login-request-container">
-                    <a class="login-request" href="{% url 'login' %}">
-                        Please login to gain access to this content.
-                    </a>
-                </section>
-            {% endif %}
+            <section class="loading-container">
+                <div class="loader">
+                    <span style="--i:1;"></span>
+                    <span style="--i:2;"></span>
+                    <span style="--i:3;"></span>
+                    <span style="--i:4;"></span>
+                    <span style="--i:5;"></span>
+                    <span style="--i:6;"></span>
+                    <span style="--i:7;"></span>
+                    <span style="--i:8;"></span>
+                    <span style="--i:9;"></span>
+                    <span style="--i:10;"></span>
+                    <span style="--i:11;"></span>
+                    <span style="--i:12;"></span>
+                    <span style="--i:13;"></span>
+                    <span style="--i:14;"></span>
+                    <span style="--i:15;"></span>
+                    <span style="--i:16;"></span>
+                    <span style="--i:17;"></span>
+                    <span style="--i:18;"></span>
+                    <span style="--i:19;"></span>
+                    <span style="--i:20;"></span>
+                </div>
+            </section>
+            <section class="label-container">
+                <p class="label">
+                    Loading Content...
+                </p>
+            </section>
         </main>
     </body>
 </html>

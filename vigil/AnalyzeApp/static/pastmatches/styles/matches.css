@@ -1,6 +1,28 @@
+.gridder {
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    margin-top: 78px;
+}
+.title-container {
+    border-bottom: solid 1px rgb(250,193,93);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    padding-bottom: 16px;
+}
+.title {
+    color: rgb(250,193,93);
+    font-size: 56px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
 .many-matches-container {
     border: solid 4px rgba(0, 0, 0, 0.599);
-    margin: 80px 28px 0px 28px;
+    margin: 60px 28px 0px 28px;
+    width: 80%;
 }
 .match-card {
     margin: 14px;

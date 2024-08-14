@@ -4,3 +4,8 @@
 .graph-container {
     padding: 16px 32px;
 }
+.subsystem-title {
+    color: rgb(250,193,93);
+    font-size: 40px;
+    margin: 0px;
+}
