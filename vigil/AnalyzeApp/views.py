@@ -2,7 +2,7 @@ from .methods import get_all_with_username, last_with_username
 from django.core.handlers.wsgi import WSGIRequest
 from ConfigApp.models import CurrentConfiguration
 from django.shortcuts import render, redirect
-from .graphs import group_graphs, adv_groups
+from .graphs import adv_groups, get_performance_rating, get_health_rating
 from .forms import AnalyzeConfigForm
 from .models import AnalyzeConfig
 import vigil.settings as settings
@@ -25,9 +25,12 @@ def analyze(request:WSGIRequest):
 def analyzematch(request:WSGIRequest):
     path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
     currconfig = get_all_with_username(CurrentConfiguration)[0]
-    grouping = adv_groups(path, currconfig)
+    grouping = adv_groups(path, currconfig)[0]
+    faults = adv_groups(path, currconfig)[1]
+    perf = get_performance_rating(grouping)
+    health = get_health_rating(grouping)
 
-    return render(request, 'analyzematch.html', {'grouping': grouping})
+    return render(request, 'analyzematch.html', {'grouping': grouping, 'faults': faults, 'health': health, 'perf': perf})
 
 def pastmatches(request:WSGIRequest):
     matchcontent = get_all_with_username(AnalyzeConfig)

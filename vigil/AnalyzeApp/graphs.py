@@ -84,6 +84,8 @@ class LineGroup:
                 self.fig.add_trace(trace)
 
         self.fig.update_layout(
+            autosize=False,
+            width=1000,
             updatemenus=[
                 {
                     'buttons': [
@@ -121,7 +123,7 @@ class LineGroup:
         try:
             return graph.col_name
         except AttributeError:
-            return f"{graph.col_names[0]} vs {graph.col_names[1]}"
+            return f"actual vs desired {self.getattribute(graph.col_names[0])}"
 
     def getattribute(self, col_name:str):
         for arg in constants.args:
@@ -139,6 +141,12 @@ class LineGroup:
 
     def to_html(self):
         return self._to_html
+
+class Fault:
+    def __init__(self, title:str, freq:int, timestamps:list) -> None:
+        self.title = title
+        self.freq = freq
+        self.timestamps = timestamps
 
 def get_numeric_columns(path) -> list[str]:
     df = pd.read_csv(path)
@@ -230,5 +238,13 @@ def adv_groups(path, currconfig) -> dict:
     
     for sub, graph in grouping.items():
         grouping[sub] = graph.to_html()
+
+    faults = [Fault("CAN Timeout", 4, [100, 200, 300, 400, 500])]
     
-    return grouping
+    return grouping, faults
+
+def get_performance_rating(grouping) -> int:
+    return 96
+
+def get_health_rating(grouping) -> int:
+    return 90

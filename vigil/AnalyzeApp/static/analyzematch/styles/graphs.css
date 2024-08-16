@@ -8,4 +8,39 @@
     color: rgb(250,193,93);
     font-size: 40px;
     margin: 0px;
+    font-weight: bold;
+}
+
+.subsystem-graphs-container {
+    display: flex;
+    align-items: start;
+}
+.sub-graph {
+    width: 1000px;
+}
+.sub-faults-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px 10px 10px;
+}
+.sub-faults-title {
+    margin-bottom: 6px;
+    margin-top: 0px;
+    color: rgb(250, 193, 93);
+    font-weight: bold;
+    text-align: center;
+    font-size: 28px;
+}
+.faults-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-percents-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

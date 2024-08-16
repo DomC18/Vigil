@@ -23,6 +23,7 @@
     font-size: 60px;
     color: rgb(250,193,93);
     margin: 0px;
+    font-weight: bold;
 }
 
 .config-specs-container {
@@ -31,14 +32,16 @@
     border: solid 1px grey;
     border-radius: 20px;
 }
-.curr-config-container {
-    
+.curr-config-title, .curr-config-info {
+    color: rgb(250,193,93);
+    font-weight: bold;
+    margin: 0px
 }
 .curr-config-title {
-
+    font-size: 36px;
 }
 .curr-config-info {
-
+    font-size: 28px;
 }
 
 .many-configs-container {
@@ -156,7 +159,7 @@
     justify-content: space-evenly;
 }
 .page-link, .create-config-link {
-    color: rgb(250, 193, 93);
+    color: rgb(250,193,93);
     background-color: rgb(40, 40, 40);
     text-decoration: none;
     padding: 12px 20px;

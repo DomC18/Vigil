@@ -6,9 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vigil Analyze</title>
         <link rel="stylesheet" href="{% static 'analyzematch/styles/general.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzematch/styles/form.css' %}">
-        <link rel="stylesheet" href="{% static 'analyzematch/styles/navbar.css' %}">
         <link rel="stylesheet" href="{% static 'analyzematch/styles/graphs.css' %}">
+        <link rel="stylesheet" href="{% static 'analyzematch/styles/navbar.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -62,11 +61,66 @@
                 <section class="graphs-container">
                     {% for sub, group in grouping.items %}
                         <div class="graph-container">
+                            <p class="subsystem-title kanit">
+                                {{sub}}:
+                            </p>
                             {% if group|safe != 'None' %}
-                                <p class="subsystem-title kanit">
-                                    {{sub}}:
-                                </p>
-                                {{group|safe}}
+                                <div class="subsystem-graphs-container">
+                                    <div class="sub-graph">
+                                        {{group|safe}}
+                                    </div>
+                                    <div class="sub-faults-container">
+                                        <p class="sub-faults-title kanit">
+                                            Subsystem Faults
+                                        </p>
+                                        <div class="faults-container">
+                                            {% for fault in faults %}
+                                                <div class="fault-container">
+                                                    <div class="fault-basic-container">
+                                                        <p class="fault-title kanit">
+                                                            {{fault.title}}
+                                                        </p>
+                                                        <p class="fault-freq kanit">
+                                                            {{fault.freq}}
+                                                        </p>
+                                                    </div>
+                                                    <div class="fault-timestamps-container">
+                                                        {% for timestamp in fault.timestamps %}
+                                                            <div class="fault-timestamp-container">
+                                                                <p class="fault-timestamp-value kanit">
+                                                                    {{timestamp}}
+                                                                </p>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="sub-percents-container">
+                                        <div class="sub-health-container">
+                                            <p class="sub-health-label">
+                                                {{sub}} Health
+                                            </p>
+                                            <label for="sub-health">{{health}}%</label>
+                                            <progress id="sub-health" class="sub-health-value" value="{{health}}" max="100"></progress>
+                                        </div>
+                                        <div class="sub-perf-container">
+                                            <p class="sub-perf-label">
+                                                {{sub}} Performance
+                                            </p>
+                                            <label class="sub-perf-label" for="sub-perf">{{perf}}%</label>
+                                            <progress id="sub-perf" class="sub-perf-value" value="{{perf}}" max="100"></progress>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="no-data-container">
+                                    <p class="no-data-label">
+                                        No data has been detected for this subsystem 
+                                        from this match.
+                                    </p>
+                                </div>
                             {% endif %}
                         </div>
                     {% endfor %}
