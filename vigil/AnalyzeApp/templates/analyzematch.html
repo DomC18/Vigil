@@ -62,85 +62,115 @@
                     {% for sub, group in grouping.items %}
                         <div class="graph-container">
                             <p class="subsystem-title kanit">
-                                {{sub}}:
+                                {{sub}}
                             </p>
-                            {% if group|safe != 'None' %}
-                                <div class="subsystem-graphs-container">
-                                    <div class="sub-graph">
-                                        {{group|safe}}
-                                    </div>
-                                    <div class="sub-faults-container">
-                                        <p class="sub-faults-title kanit">
-                                            Subsystem Faults
-                                        </p>
+                            <div class="subsystem-graphs-container">
+                                <div class="sub-graph-container">
+                                    <p class="sub-graphs-title kanit">
+                                        Graphs:
+                                    </p>
+                                    {% if group.0|safe != 'None' %}
+                                        <div class="sub-graph">
+                                            {{group.0|safe}}
+                                        </div>
+                                    {% else %}
+                                        <div class="no-data-container" style="width: 1000px;">
+                                            <p class="no-data-label kanit">
+                                                No graph data has been detected for this subsystem 
+                                                from this match.
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="sub-faults-container">
+                                    <p class="sub-faults-title kanit">
+                                        Subsystem Faults:
+                                    </p>
+                                    {% if group.1.0 %}
                                         <div class="faults-container">
-                                            {% for fault in faults %}
-                                                <div class="fault-container">
-                                                    <div class="fault-basic-container">
-                                                        <div class="fault-title-container">
-                                                            <p class="fault-title-label kanit">
-                                                                Fault
-                                                            </p>
-                                                            <p class="fault-title kanit">
-                                                                {{fault.title}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="fault-freq-container">
-                                                            <p class="fault-freq-title kanit">
-                                                                Fault Count
-                                                            </p>
-                                                            <p class="fault-freq-value kanit">
-                                                                {{fault.freq}}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="fault-timestamps-container">
-                                                        <p class="fault-timestamps-title kanit">
-                                                            Fault Timestamps
-                                                        </p>
-                                                        {% for timestamp in fault.timestamps %}
-                                                            <div class="fault-timestamp-container">
-                                                                <p class="fault-timestamp-value kanit">
-                                                                    {{timestamp}}
+                                            {% for fault in group.1 %}
+                                                {% if fault.isactive %}
+                                                    <div class="fault-container">
+                                                        <div class="fault-basic-container">
+                                                            <div class="fault-title-container">
+                                                                <p class="fault-title-label kanit">
+                                                                    Fault
+                                                                </p>
+                                                                <p class="fault-title kanit">
+                                                                    {{fault.title}}
                                                                 </p>
                                                             </div>
-                                                        {% endfor %}
+                                                            <div class="fault-freq-container">
+                                                                <p class="fault-freq-title kanit">
+                                                                    Fault Count
+                                                                </p>
+                                                                <p class="fault-freq-value kanit">
+                                                                    {{fault.freq}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fault-timestamps-container">
+                                                            <p class="fault-timestamps-title kanit">
+                                                                Fault Timestamps
+                                                            </p>
+                                                            {% for timestamp in fault.timestamps %}
+                                                                <div class="fault-timestamp-container">
+                                                                    <p class="fault-timestamp-value kanit">
+                                                                        {{timestamp}}
+                                                                    </p>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                {% endif %}
                                             {% endfor %}
                                         </div>
-                                    </div>
-                                    <div class="sub-percents-container">
-                                        <div class="sub-health-container" style="margin-bottom: 8px;">
+                                        {% if group.1.1 %}
+                                            <div class="sub-fault-browse">
+                                                <a class="sub-fault-back kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=backfaultidx %}">
+                                                    Back
+                                                </a>
+                                                <a class="sub-fault-next kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=nextfaultidx %}">
+                                                    Next
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="no-data-container">
+                                            <p class="no-data-label kanit">
+                                                No fault data has been detected for this subsystem 
+                                                from this match.
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="sub-percents-container">
+                                    <div class="sub-health-container" style="margin-bottom: 8px;">
+                                        {% if group.2 %}
                                             <p class="sub-health-title kanit">
                                                 Health
                                             </p>
-                                            <div class="sub-health-progress-circle" style="--progress: {{health}};">
+                                            <div class="sub-health-progress-circle" style="--progress: {{group.2}};">
                                                 <p class="sub-health-label kanit">
-                                                    {{health}}%
+                                                    {{group.2}}%
                                                 </p>
                                             </div>
-                                        </div>
-                                        <div class="sub-perf-container">
+                                        {% endif %}
+                                    </div>
+                                    <div class="sub-perf-container">
+                                        {% if group.3 %}
                                             <p class="sub-perf-title kanit">
                                                 Performance
                                             </p>
-                                            <div class="sub-perf-progress-circle" style="--progress: {{perf}};">
+                                            <div class="sub-perf-progress-circle" style="--progress: {{group.3}};">
                                                 <p class="sub-perf-label kanit" for="sub-perf">
-                                                    {{perf}}%
+                                                    {{group.3}}%
                                                 </p>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
-                            {% else %}
-                                <div class="no-data-container">
-                                    <p class="no-data-label kanit">
-                                        No data has been detected for this subsystem 
-                                        from this match.
-                                    </p>
-                                </div>
-                            {% endif %}
+                            </div>
                         </div>
                     {% endfor %}
                 </section>

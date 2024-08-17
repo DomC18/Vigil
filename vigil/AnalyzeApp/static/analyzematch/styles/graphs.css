@@ -12,7 +12,7 @@
 }
 .subsystem-title {
     color: rgb(250,193,93);
-    font-size: 40px;
+    font-size: 56px;
     margin: 0px;
     font-weight: bold;
     border-style: solid;
@@ -27,6 +27,9 @@
     display: flex;
     align-items: start;
 }
+.sub-graph-container {
+    width: 1000px;
+}
 .sub-graph {
     width: 1000px;
 }
@@ -38,7 +41,7 @@
     flex-direction: column;
     padding: 0px 10px 0px 22px;
 }
-.sub-faults-title {
+.sub-graphs-title, .sub-faults-title {
     margin-bottom: 18px;
     margin-top: 0px;
     color: rgb(250, 193, 93);
@@ -88,6 +91,28 @@
     font-size: 18px;
 }
 
+.sub-fault-browse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.sub-fault-back, .sub-fault-next {
+    padding: 8px 14px;
+    border: solid 2px grey;
+    border-radius: 4px;
+    color: rgb(250,193,93);
+    text-decoration: none;
+    font-size: 22px;
+    transition: all 0.25s ease-in-out;
+}
+.sub-fault-back:hover {
+    background-color: red;
+}
+.sub-fault-next:hover {
+    background-color: green;
+}
+
 
 .sub-percents-container {
     flex: 1;
@@ -125,4 +150,13 @@
         green calc(var(--progress) * 1%), 
         lightgray 0
     );
+}
+
+
+.no-data-container {
+    text-align: center;
+}
+.no-data-label {
+    color: rgb(250,193,93);
+    font-size: 32px;
 }

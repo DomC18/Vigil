@@ -148,10 +148,11 @@ class LineGroup:
         return self._to_html
 
 class Fault:
-    def __init__(self, title:str, freq:int, timestamps:list) -> None:
+    def __init__(self, title:str, freq:int, timestamps:list, isactive=False) -> None:
         self.title = title
         self.freq = freq
         self.timestamps = timestamps
+        self.isactive = isactive
 
 def get_numeric_columns(path) -> list[str]:
     df = pd.read_csv(path)
@@ -226,6 +227,7 @@ def adv_groups(path, currconfig) -> dict:
 
     for sub in subsystems:
         graphs = []
+        faults = []
         past_complements = []
         for col_name in numeric_columns:
             if belongs_to(col_name, sub):
@@ -237,19 +239,32 @@ def adv_groups(path, currconfig) -> dict:
                     graphs.append(DoubleLineGraph(path, [col_name, complement[1]]))
                 else:
                     graphs.append(LineGraph(path, col_name))
-        
         curr_group = LineGroup(graphs)
-        grouping[sub.casefold().capitalize()] = curr_group
+        if len(graphs) == 0:
+            curr_group = None
+        
+        faults = [
+            Fault("CAN Timeout", 4, [100, 200, 300, 400], True),
+            Fault("Voltage Drop", 2, [100, 200])
+        ]
+
+        perf = get_performance_rating(curr_group)
+        health = get_health_rating(curr_group)
+
+        grouping[sub.casefold().capitalize()] = [curr_group, faults, perf, health]
     
     for sub, graph in grouping.items():
-        grouping[sub] = graph.to_html()
-
-    faults = [Fault("CAN Timeout", 4, [100, 200, 300, 400])]
+        try: grouping[sub][0] = graph[0].to_html()
+        except AttributeError: continue
     
-    return grouping, faults
+    return grouping
 
 def get_performance_rating(grouping) -> int:
+    if grouping == None:
+        return None
     return 96
 
 def get_health_rating(grouping) -> int:
+    if grouping == None:
+        return None
     return 90

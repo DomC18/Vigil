@@ -2,7 +2,7 @@ from .methods import get_all_with_username, last_with_username
 from django.core.handlers.wsgi import WSGIRequest
 from ConfigApp.models import CurrentConfiguration
 from django.shortcuts import render, redirect
-from .graphs import adv_groups, get_performance_rating, get_health_rating
+from .graphs import adv_groups
 from .forms import AnalyzeConfigForm
 from .models import AnalyzeConfig
 import vigil.settings as settings
@@ -25,12 +25,33 @@ def analyze(request:WSGIRequest):
 def analyzematch(request:WSGIRequest):
     path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
     currconfig = get_all_with_username(CurrentConfiguration)[0]
-    grouping = adv_groups(path, currconfig)[0]
-    faults = adv_groups(path, currconfig)[1]
-    perf = get_performance_rating(grouping)
-    health = get_health_rating(grouping)
+    grouping = adv_groups(path, currconfig)
 
-    return render(request, 'analyzematch.html', {'grouping': grouping, 'faults': faults, 'health': health, 'perf': perf})
+    return render(request, 'analyzematch.html', {'grouping': grouping, 'backfaultidx': 0, 'nextfaultidx': 1})
+
+def analyzematchswitch(request:WSGIRequest, subsystem, fault_idx):
+    path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
+    currconfig = get_all_with_username(CurrentConfiguration)[0]
+    grouping = adv_groups(path, currconfig)
+
+    fault_idx = int(fault_idx)
+    faults = grouping[subsystem][1]
+    for fault in faults:
+        if fault.isactive:
+            fault.isactive = False
+            break
+    faults[fault_idx].isactive = True
+
+    if fault_idx == 0:
+        backfaultidx = 0
+    else:
+        backfaultidx = fault_idx-1
+    if fault_idx == len(faults) - 1:
+        nextfaultidx = len(faults) - 1
+    else:
+        nextfaultidx = fault_idx+1
+
+    return render(request, 'analyzematch.html', {'grouping': grouping, 'backfaultidx': backfaultidx, 'nextfaultidx': nextfaultidx})
 
 def pastmatches(request:WSGIRequest):
     matchcontent = get_all_with_username(AnalyzeConfig)
