@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import plotly.express as px
+from plotly.graph_objs import *
 import pandas as pd
 import numpy as np
 import constants
@@ -78,7 +79,11 @@ class LineGroup:
             return
         
         self.graphs = graphs
-        self.fig = go.Figure()
+        layout = Layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)'
+        )
+        self.fig = go.Figure(layout=layout)
         for graph in graphs:
             for trace in graph.fig.data:
                 self.fig.add_trace(trace)
@@ -239,7 +244,7 @@ def adv_groups(path, currconfig) -> dict:
     for sub, graph in grouping.items():
         grouping[sub] = graph.to_html()
 
-    faults = [Fault("CAN Timeout", 4, [100, 200, 300, 400, 500])]
+    faults = [Fault("CAN Timeout", 4, [100, 200, 300, 400])]
     
     return grouping, faults
 

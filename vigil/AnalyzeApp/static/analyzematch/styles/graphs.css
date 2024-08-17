@@ -1,16 +1,28 @@
 .graphs-container {
-    margin-top: 50px;
+    margin-top: 62px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 .graph-container {
     padding: 16px 32px;
+    border: solid 4px grey;
+    border-radius: 6px;
+    margin: 0px 12px;
 }
 .subsystem-title {
     color: rgb(250,193,93);
     font-size: 40px;
     margin: 0px;
     font-weight: bold;
+    border-style: solid;
+    border-color: grey;
+    border-bottom-width: 1px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    margin-bottom: 10px;
 }
-
 .subsystem-graphs-container {
     display: flex;
     align-items: start;
@@ -18,29 +30,99 @@
 .sub-graph {
     width: 1000px;
 }
+
+
 .sub-faults-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0px 10px 10px 10px;
+    padding: 0px 10px 0px 22px;
 }
 .sub-faults-title {
-    margin-bottom: 6px;
+    margin-bottom: 18px;
     margin-top: 0px;
     color: rgb(250, 193, 93);
     font-weight: bold;
     text-align: center;
-    font-size: 28px;
+    font-size: 42px;
 }
 .faults-container {
     display: flex;
     flex-direction: column;
+    gap: 12px;
 }
+.fault-container {
+    border: solid 2px grey;
+    padding: 14px 20px 20px 20px;
+    border-radius: 4px;
+}
+.fault-basic-container {
+    display: flex;
+}
+.fault-title-container {
+    flex: 1;
+}
+.fault-title-label, .fault-freq-title, .fault-timestamps-title {
+    color: rgb(250,193,93);
+    font-size: 30px;
+    margin: 6px 0px;
+    font-weight: bold;
+}
+.fault-title, .fault-freq-value, .fault-timestamp-value {
+    flex: 1;
+    color: rgb(155,119,55);
+    font-size: 24px;
+    margin: 6px 0px;
+}
+.fault-freq-container {
+    flex: 1;
+    text-align: right;
+}
+.fault-timestamp-container {
+    display: inline-block;
+}
+.fault-timestamp-value {
+    display: inline-block;
+    padding: 0px 4px;
+    border: solid 1px grey;
+    font-size: 18px;
+}
+
 
 .sub-percents-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+}
+.sub-health-title, .sub-perf-title {
+    color: rgb(250,193,93);
+    font-size: 26px;
+    margin: 6px 0px;
+}
+.sub-health-label, .sub-perf-label {
+    font-weight: bold;
+}
+.sub-health-progress-circle, .sub-perf-progress-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    font-size: 24px;
+    color: black;
+}
+.sub-health-progress-circle {
+    background: conic-gradient(
+        red calc(var(--progress) * 1%), 
+        lightgray 0
+    );
+}
+.sub-perf-progress-circle {
+    background: conic-gradient(
+        green calc(var(--progress) * 1%), 
+        lightgray 0
+    );
 }

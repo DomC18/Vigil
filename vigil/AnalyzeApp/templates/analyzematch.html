@@ -77,14 +77,27 @@
                                             {% for fault in faults %}
                                                 <div class="fault-container">
                                                     <div class="fault-basic-container">
-                                                        <p class="fault-title kanit">
-                                                            {{fault.title}}
-                                                        </p>
-                                                        <p class="fault-freq kanit">
-                                                            {{fault.freq}}
-                                                        </p>
+                                                        <div class="fault-title-container">
+                                                            <p class="fault-title-label kanit">
+                                                                Fault
+                                                            </p>
+                                                            <p class="fault-title kanit">
+                                                                {{fault.title}}
+                                                            </p>
+                                                        </div>
+                                                        <div class="fault-freq-container">
+                                                            <p class="fault-freq-title kanit">
+                                                                Fault Count
+                                                            </p>
+                                                            <p class="fault-freq-value kanit">
+                                                                {{fault.freq}}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                     <div class="fault-timestamps-container">
+                                                        <p class="fault-timestamps-title kanit">
+                                                            Fault Timestamps
+                                                        </p>
                                                         {% for timestamp in fault.timestamps %}
                                                             <div class="fault-timestamp-container">
                                                                 <p class="fault-timestamp-value kanit">
@@ -98,25 +111,31 @@
                                         </div>
                                     </div>
                                     <div class="sub-percents-container">
-                                        <div class="sub-health-container">
-                                            <p class="sub-health-label">
-                                                {{sub}} Health
+                                        <div class="sub-health-container" style="margin-bottom: 8px;">
+                                            <p class="sub-health-title kanit">
+                                                Health
                                             </p>
-                                            <label for="sub-health">{{health}}%</label>
-                                            <progress id="sub-health" class="sub-health-value" value="{{health}}" max="100"></progress>
+                                            <div class="sub-health-progress-circle" style="--progress: {{health}};">
+                                                <p class="sub-health-label kanit">
+                                                    {{health}}%
+                                                </p>
+                                            </div>
                                         </div>
                                         <div class="sub-perf-container">
-                                            <p class="sub-perf-label">
-                                                {{sub}} Performance
+                                            <p class="sub-perf-title kanit">
+                                                Performance
                                             </p>
-                                            <label class="sub-perf-label" for="sub-perf">{{perf}}%</label>
-                                            <progress id="sub-perf" class="sub-perf-value" value="{{perf}}" max="100"></progress>
+                                            <div class="sub-perf-progress-circle" style="--progress: {{perf}};">
+                                                <p class="sub-perf-label kanit" for="sub-perf">
+                                                    {{perf}}%
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             {% else %}
                                 <div class="no-data-container">
-                                    <p class="no-data-label">
+                                    <p class="no-data-label kanit">
                                         No data has been detected for this subsystem 
                                         from this match.
                                     </p>
