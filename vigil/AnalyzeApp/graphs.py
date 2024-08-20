@@ -30,7 +30,7 @@ class LineGraph:
         self._to_html = self.fig.to_html()
     
     def populate_data(self):
-        for index, row in self.df.iterrows():
+        for _, row in self.df.iterrows():
             self.x_data.append(row["timestamp"])
             self.y_data.append(row[self.col_name])
 
@@ -148,15 +148,28 @@ class LineGroup:
         return self._to_html
 
 class Fault:
-    def __init__(self, title:str, freq:int, timestamps:list, isactive=False) -> None:
+    def __init__(self, title:str, isactive:bool, freq:int, timestamps:list) -> None:
         self.title = title
         self.freq = freq
         self.timestamps = timestamps
         self.isactive = isactive
+    
+    def fill_timestamps(self, path):
+        df = pd.read_csv(path)
+
+        for _, row in df.iterrows():
+            if row[self.title] == True:
+                self.timestamps.append(round(row["timestamp"], 3))
+
+        self.freq = len(self.timestamps)
 
 def get_numeric_columns(path) -> list[str]:
     df = pd.read_csv(path)
     return [col for col in df.columns if col != "timestamp" and df[col].dtype in [np.float64, np.int64]]
+
+def get_fault_columns(path) -> list[str]:
+    df = pd.read_csv(path)
+    return [col for col in df.columns if df[col].dtype == np.bool and ('fault' in col or 'error' in col or 'err' in col)]
 
 def belongs_to(column, sub) -> bool:
     try: return ((sub.lower() in column.lower()) or (sub[0:6].lower() == column[0:6].lower()) or (sub[0:5].lower() == column[0:5].lower()) or (sub[0:4].lower() == column[0:4].lower()) or (sub[0:3].lower() == column[0:3].lower()) or (sub[0:2].lower() == column[0:2].lower()))
@@ -199,30 +212,11 @@ def find_complement(curr_column:str, columns:list):
             continue
     return (False, None)
 
-def group_graphs(path, currconfig) -> dict:
-    currconfig_subsystems = currconfig.SubsystemConfig.Subsystems.all()
-    subsystems = [s.SubsystemName for s in currconfig_subsystems]
-    numeric_columns = get_numeric_columns(path)
-    grouping = {}
-
-    for sub in subsystems:
-        graphs = []
-        for col_name in numeric_columns:
-            if belongs_to(col_name, sub):
-                graphs.append(LineGraph(path, col_name))
-        
-        curr_group = LineGroup(graphs)
-        grouping[sub.casefold().capitalize()] = curr_group
-    
-    for sub, group in grouping.items():
-        grouping[sub] = group.to_html()
-
-    return grouping
-
 def adv_groups(path, currconfig) -> dict:
     currconfig_subsystems = currconfig.SubsystemConfig.Subsystems.all()
     subsystems = [s.SubsystemName for s in currconfig_subsystems]
     numeric_columns = get_numeric_columns(path)
+    fault_columns = get_fault_columns(path)
     grouping = {}
 
     for sub in subsystems:
@@ -243,14 +237,17 @@ def adv_groups(path, currconfig) -> dict:
         if len(graphs) == 0:
             curr_group = None
         
-        faults = [
-            Fault("CAN Timeout", 4, [100, 200, 300, 400], True),
-            Fault("Voltage Drop", 2, [100, 200]),
-            Fault("Current Overflow", 3, [100, 200, 300])
-        ]
+        for col_name in fault_columns:
+            if belongs_to(col_name, sub):
+                if len(faults) == 0:
+                    fault = Fault(col_name, True, 0, [])
+                else:
+                    fault = Fault(col_name, False, 0, [])
+                fault.fill_timestamps(path)
+                faults.append(fault)
 
-        perf = get_performance_rating(curr_group)
-        health = get_health_rating(curr_group)
+        perf = get_performance_rating(curr_group, faults)
+        health = get_health_rating(curr_group, faults)
 
         grouping[sub.casefold().capitalize()] = [curr_group, faults, perf, health]
     
@@ -260,12 +257,12 @@ def adv_groups(path, currconfig) -> dict:
     
     return grouping
 
-def get_performance_rating(grouping) -> int:
+def get_performance_rating(grouping, faults) -> int:
     if grouping == None:
         return None
     return 96
 
-def get_health_rating(grouping) -> int:
+def get_health_rating(grouping, faults) -> int:
     if grouping == None:
         return None
     return 90
