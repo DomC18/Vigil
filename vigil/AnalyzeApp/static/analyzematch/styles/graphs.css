@@ -25,7 +25,7 @@
 }
 .subsystem-graphs-container {
     display: flex;
-    align-items: start;
+    align-items: center;
 }
 .sub-graph-container {
     width: 1000px;
@@ -97,6 +97,10 @@
     align-items: center;
     margin-top: 10px;
 }
+.sub-fault-browse-label {
+    color: rgb(250,193,93);
+    font-size: 18px;
+}
 .sub-fault-back, .sub-fault-next {
     padding: 8px 14px;
     border: solid 2px grey;
@@ -111,6 +115,13 @@
 }
 .sub-fault-next:hover {
     background-color: green;
+}
+.grey-hover {
+    background-color: grey;
+    opacity: 0.375;
+}
+.grey-hover:hover {
+    background-color: grey;
 }
 
 
@@ -130,8 +141,8 @@
     font-weight: bold;
 }
 .sub-health-progress-circle, .sub-perf-progress-circle {
-    width: 150px;
-    height: 150px;
+    width: 166px;
+    height: 166px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -155,6 +166,8 @@
 
 .no-data-container {
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 .no-data-label {
     color: rgb(250,193,93);

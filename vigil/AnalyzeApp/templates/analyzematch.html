@@ -58,7 +58,7 @@
                 </div>
             </nav>
             {% if user.is_authenticated %}
-                <section class="graphs-container">
+                <section class="graphs-container" style="margin-bottom: 100px;">
                     {% for sub, group in grouping.items %}
                         <div class="graph-container">
                             <p class="subsystem-title kanit">
@@ -66,16 +66,13 @@
                             </p>
                             <div class="subsystem-graphs-container">
                                 <div class="sub-graph-container">
-                                    <p class="sub-graphs-title kanit">
-                                        Graphs:
-                                    </p>
                                     {% if group.0|safe != 'None' %}
                                         <div class="sub-graph">
                                             {{group.0|safe}}
                                         </div>
                                     {% else %}
                                         <div class="no-data-container" style="width: 1000px;">
-                                            <p class="no-data-label kanit">
+                                            <p class="no-data-label kanit" style="width: 600px;">
                                                 No graph data has been detected for this subsystem 
                                                 from this match.
                                             </p>
@@ -127,12 +124,53 @@
                                         </div>
                                         {% if group.1.1 %}
                                             <div class="sub-fault-browse">
-                                                <a class="sub-fault-back kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=backfaultidx %}">
-                                                    Back
-                                                </a>
-                                                <a class="sub-fault-next kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=nextfaultidx %}">
-                                                    Next
-                                                </a>
+                                                {% if reachedback %}
+                                                    <p class="sub-fault-back kanit grey-hover">
+                                                        Back
+                                                    </p>
+                                                {% else %}
+                                                    {% if sub == subsystem %}
+                                                        <a class="sub-fault-back kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=backfaultidx %}">
+                                                            Back
+                                                        </a>
+                                                    {% else %}
+                                                        <p class="sub-fault-back kanit grey-hover">
+                                                            Back
+                                                        </p>
+                                                    {% endif %}
+                                                {% endif %}
+                                                
+                                                {% if sub == subsystem %}
+                                                    <p class="sub-fault-browse-label kanit">
+                                                        Fault {{fault_idx}} of {{group.1|length}}
+                                                    </p>
+                                                {% else %}
+                                                    <p class="sub-fault-browse-label kanit">
+                                                        Fault 1 of {{group.1|length}}
+                                                    </p>
+                                                {% endif %}
+                                                
+                                                {% if reachedfront %}
+                                                    {% if sub == subsystem %}
+                                                        <p class="sub-fault-next kanit grey-hover">
+                                                            Next
+                                                        </p>
+                                                    {% else %}
+                                                        <a class="sub-fault-next kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=1 %}">
+                                                            Next
+                                                        </a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if sub == subsystem %}
+                                                        <a class="sub-fault-next kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=nextfaultidx %}">
+                                                            Next
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="sub-fault-next kanit" href="{% url 'analyzematchswitch' subsystem=sub fault_idx=1 %}">
+                                                            Next
+                                                        </a>
+                                                    {% endif %}
+                                                {% endif %}
                                             </div>
                                         {% endif %}
                                     {% else %}
@@ -145,7 +183,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="sub-percents-container">
-                                    <div class="sub-health-container" style="margin-bottom: 8px;">
+                                    <div class="sub-health-container" style="margin-bottom: 20px;">
                                         {% if group.2 %}
                                             <p class="sub-health-title kanit">
                                                 Health

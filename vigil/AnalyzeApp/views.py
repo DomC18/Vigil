@@ -27,7 +27,7 @@ def analyzematch(request:WSGIRequest):
     currconfig = get_all_with_username(CurrentConfiguration)[0]
     grouping = adv_groups(path, currconfig)
 
-    return render(request, 'analyzematch.html', {'grouping': grouping, 'backfaultidx': 0, 'nextfaultidx': 1})
+    return render(request, 'analyzematch.html', {'grouping': grouping, 'fault_idx': 1, 'subsystem': list(grouping.keys())[0], 'backfaultidx': 0, 'reachedback': True, 'nextfaultidx': 1, 'reachedfront': False})
 
 def analyzematchswitch(request:WSGIRequest, subsystem, fault_idx):
     path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
@@ -44,14 +44,18 @@ def analyzematchswitch(request:WSGIRequest, subsystem, fault_idx):
 
     if fault_idx == 0:
         backfaultidx = 0
+        reached_back = True
     else:
         backfaultidx = fault_idx-1
+        reached_back = False
     if fault_idx == len(faults) - 1:
         nextfaultidx = len(faults) - 1
+        reached_front = True
     else:
         nextfaultidx = fault_idx+1
+        reached_front = False
 
-    return render(request, 'analyzematch.html', {'grouping': grouping, 'backfaultidx': backfaultidx, 'nextfaultidx': nextfaultidx})
+    return render(request, 'analyzematch.html', {'grouping': grouping, 'fault_idx': fault_idx+1, 'subsystem': subsystem, 'backfaultidx': backfaultidx, 'reachedback': reached_back, 'nextfaultidx': nextfaultidx, 'reachedfront': reached_front})
 
 def pastmatches(request:WSGIRequest):
     matchcontent = get_all_with_username(AnalyzeConfig)

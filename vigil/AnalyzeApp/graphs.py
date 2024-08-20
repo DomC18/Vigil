@@ -245,7 +245,8 @@ def adv_groups(path, currconfig) -> dict:
         
         faults = [
             Fault("CAN Timeout", 4, [100, 200, 300, 400], True),
-            Fault("Voltage Drop", 2, [100, 200])
+            Fault("Voltage Drop", 2, [100, 200]),
+            Fault("Current Overflow", 3, [100, 200, 300])
         ]
 
         perf = get_performance_rating(curr_group)
