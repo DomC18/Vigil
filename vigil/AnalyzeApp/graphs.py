@@ -4,6 +4,7 @@ from plotly.graph_objs import *
 import pandas as pd
 import numpy as np
 import constants
+import ai
 
 class LineGraph:
     def __init__(self, csv_file, col_name) -> None:
@@ -169,7 +170,8 @@ def get_numeric_columns(path) -> list[str]:
 
 def get_fault_columns(path) -> list[str]:
     df = pd.read_csv(path)
-    return [col for col in df.columns if df[col].dtype == np.bool and ('fault' in col or 'error' in col or 'err' in col)]
+    return [col for col in df.columns if df[col].dtype == bool and (('fault' in col or 'error' in col or 'err' in col)
+                                                                    or ('Fault' in col or 'Error' in col or 'Err' in col))]
 
 def belongs_to(column, sub) -> bool:
     try: return ((sub.lower() in column.lower()) or (sub[0:6].lower() == column[0:6].lower()) or (sub[0:5].lower() == column[0:5].lower()) or (sub[0:4].lower() == column[0:4].lower()) or (sub[0:3].lower() == column[0:3].lower()) or (sub[0:2].lower() == column[0:2].lower()))
@@ -223,6 +225,8 @@ def adv_groups(path, currconfig) -> dict:
         graphs = []
         faults = []
         past_complements = []
+        complement_pairs = []
+        nonpairs = []
         for col_name in numeric_columns:
             if belongs_to(col_name, sub):
                 complement = find_complement(col_name, numeric_columns)
@@ -231,8 +235,10 @@ def adv_groups(path, currconfig) -> dict:
                     continue
                 elif complement[0]:
                     graphs.append(DoubleLineGraph(path, [col_name, complement[1]]))
+                    complement_pairs.append((col_name, complement[1]))
                 else:
                     graphs.append(LineGraph(path, col_name))
+                    nonpairs.append(col_name)
         curr_group = LineGroup(graphs)
         if len(graphs) == 0:
             curr_group = None
@@ -246,10 +252,12 @@ def adv_groups(path, currconfig) -> dict:
                 fault.fill_timestamps(path)
                 faults.append(fault)
 
-        perf = get_performance_rating(curr_group, faults)
-        health = get_health_rating(curr_group, faults)
+        perf = get_performance_rating(complement_pairs, nonpairs, faults) if get_performance_rating(complement_pairs, nonpairs, faults) != 0 else None
+        health = get_health_rating(faults) if get_health_rating(faults) != 0 else None
+        perf_advice = ai.advise_perf(complement_pairs, nonpairs)
+        health_advice = ai.advise_health(faults)
 
-        grouping[sub.casefold().capitalize()] = [curr_group, faults, perf, health]
+        grouping[sub.casefold().capitalize()] = [curr_group, faults, perf, health, perf_advice, health_advice]
     
     for sub, graph in grouping.items():
         try: grouping[sub][0] = graph[0].to_html()
@@ -257,12 +265,33 @@ def adv_groups(path, currconfig) -> dict:
     
     return grouping
 
-def get_performance_rating(grouping, faults) -> int:
-    if grouping == None:
-        return None
-    return 96
+def get_performance_rating(complement_pairs, nonpairs, faults) -> int:
+    complement_rating = get_complement_rating(complement_pairs)
+    nonpair_rating = get_nonpairs_rating(nonpairs)
+    health_rating = get_health_rating(faults)
 
-def get_health_rating(grouping, faults) -> int:
-    if grouping == None:
-        return None
-    return 90
+    return round((0.7*((complement_rating + nonpair_rating)/2) + 0.3*health_rating), 2)
+
+def get_complement_rating(complement_pairs):
+    rating = 0
+
+    if len(complement_pairs) != 0:
+        rating = ai.complement_rating_from(complement_pairs)
+    
+    return rating
+
+def get_nonpairs_rating(nonpairs):
+    rating = 0
+
+    if len(nonpairs) != 0:
+        rating = ai.nonpairs_rating_from(nonpairs)
+    
+    return rating
+
+def get_health_rating(faults) -> int:
+    rating = 0
+
+    if len(faults) != 0:
+        rating = ai.health_from(faults)
+    
+    return rating

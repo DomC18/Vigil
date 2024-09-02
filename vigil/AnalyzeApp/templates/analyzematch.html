@@ -72,10 +72,15 @@
                                         </div>
                                     {% else %}
                                         <div class="no-data-container" style="width: 1000px;">
-                                            <p class="no-data-label kanit" style="width: 600px;">
-                                                No graph data has been detected for this subsystem 
-                                                from this match.
-                                            </p>
+                                            <div>
+                                                <p class="no-data-title kanit" style="width: 900px;">
+                                                    Subsystem Graphing:
+                                                </p>
+                                                <p class="no-data-label kanit" style="width: 600px;">
+                                                    No graph data has been detected for this subsystem 
+                                                    from this match.
+                                                </p>
+                                            </div>
                                         </div>
                                     {% endif %}
                                 </div>
@@ -185,25 +190,45 @@
                                 <div class="sub-percents-container">
                                     <div class="sub-health-container" style="margin-bottom: 20px;">
                                         {% if group.2 %}
-                                            <p class="sub-health-title kanit">
-                                                Health
-                                            </p>
-                                            <div class="sub-health-progress-circle" style="--progress: {{group.2}};">
-                                                <p class="sub-health-label kanit">
-                                                    {{group.2}}%
+                                            <div class="sub-progress-container">
+                                                <p class="sub-health-title kanit">
+                                                    Health
                                                 </p>
+                                                <div class="sub-health-progress-circle" style="--progress: {{group.3}};">
+                                                    <p class="sub-health-label kanit">
+                                                        {{group.3}}%
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="sub-suggestion-container">
+                                                <button class="sub-suggestion-reveal" onclick="toggleSuggestion(this)">
+                                                    <img class="sub-suggestion-img" src="{% static 'images/vigilrobot.png' %}" alt="">
+                                                    <p class="sub-suggestion-text-hidden kanit">
+                                                        {{group.5}}
+                                                    </p>
+                                                </button>
                                             </div>
                                         {% endif %}
                                     </div>
                                     <div class="sub-perf-container">
                                         {% if group.3 %}
-                                            <p class="sub-perf-title kanit">
-                                                Performance
-                                            </p>
-                                            <div class="sub-perf-progress-circle" style="--progress: {{group.3}};">
-                                                <p class="sub-perf-label kanit" for="sub-perf">
-                                                    {{group.3}}%
+                                            <div class="sub-progress-container">
+                                                <p class="sub-perf-title kanit">
+                                                    Performance
                                                 </p>
+                                                <div class="sub-perf-progress-circle" style="--progress: {{group.2}};">
+                                                    <p class="sub-perf-label kanit" for="sub-perf">
+                                                        {{group.2}}%
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="sub-suggestion-container">
+                                                <button class="sub-suggestion-reveal" onclick="toggleSuggestion(this)">
+                                                    <img class="sub-suggestion-img" src="{% static 'images/vigilrobot.png' %}" alt="">
+                                                    <p class="sub-suggestion-text-hidden kanit">
+                                                        {{group.4}}
+                                                    </p>
+                                                </button>
                                             </div>
                                         {% endif %}
                                     </div>
@@ -212,6 +237,50 @@
                         </div>
                     {% endfor %}
                 </section>
+                <div class="suggestion-robot-container container-hide">
+                    <div class="suggestion-images-container">
+                        <img class="suggestion-robot-img" src="{% static 'images/vigilrobot.png' %}" alt="">
+                        <div class="wrench-container">
+                            <img class="suggestion-wrench-img" src="{% static 'images/wrench.png' %}" alt="">
+                            <p class="wrench-text kanit">
+                                Fix Suggestions
+                            </p>
+                        </div>
+                    </div>
+                    <p class="suggestion-robot-text kanit">
+                        filler text
+                    </p>
+                </div>
+                <div class="suggestion-close-container container-hide">
+                    <button class="suggestion-close-btn button-hide kanit" onclick="toggleSuggestion(this)">
+                        X
+                        <p class="sub-suggestion-text-hidden kanit">
+                            filler text
+                        </p>
+                    </button>
+                </div>
+                <script>
+                    function toggleSuggestion(button) {
+                        const text = button.querySelector(".sub-suggestion-text-hidden").innerHTML;
+                        const container = document.querySelector(".suggestion-robot-container");
+                        const closeContainer = document.querySelector(".suggestion-close-container");
+                        const closeButton = document.querySelector(".suggestion-close-btn");
+                        const textElement = document.querySelector(".suggestion-robot-text");
+                        
+                        container.classList.toggle("container-hide");
+                        container.classList.toggle("container-show");
+                        closeContainer.classList.toggle("container-hide");
+                        closeContainer.classList.toggle("container-show");
+                        closeButton.classList.toggle("button-hide");
+                        closeButton.classList.toggle("button-show");
+                        
+                        if (container.classList.contains("container-show")) {
+                            textElement.innerHTML = text;
+                        } else {
+                            textElement.innerHTML = "";
+                        }
+                    }
+                </script>
             {% else %}
                 <section class="login-request-container">
                     <a class="login-request" href="{% url 'login' %}">

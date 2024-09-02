@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    position: relative;
+    z-index: 2;
 }
 .graph-container {
     padding: 16px 32px;
@@ -26,6 +28,7 @@
 .subsystem-graphs-container {
     display: flex;
     align-items: center;
+    flex-flow: row wrap;
 }
 .sub-graph-container {
     width: 1000px;
@@ -163,11 +166,144 @@
     );
 }
 
+.sub-health-container, .sub-perf-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+}
+.sub-progress-container {
+    text-align: center;
+}
+.sub-suggestion-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sub-suggestion-reveal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    transition: all 0.25s ease-in-out;
+}
+.sub-suggestion-reveal:hover {
+    opacity: 0.6;
+}
+.sub-suggestion-img {
+    width: 100px;
+    margin-top: 40px;
+}
+.sub-suggestion-text-hidden {
+    color: rgb(250,193,93);
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    font-size: 0;
+}
+.sub-suggestion-text-show {
+    font-size: 16px;
+    width: 150px;
+    opacity: 1;
+}
+
+
+.suggestion-robot-container {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 32px;
+    padding-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(44, 28, 62);
+    border: solid 5px rgb(60, 60, 60);
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    transition: all 0.175s ease-in-out;
+}
+.container-hide {
+    opacity: 0;
+    z-index: 0;
+}
+.container-show {
+    opacity: 1;
+    z-index: 99;
+}
+
+.suggestion-images-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.suggestion-robot-img {
+    width: 250px;
+}
+
+.wrench-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.suggestion-wrench-img {
+    width: 200px;
+    height: 160px;
+}
+.wrench-text {
+    color: rgb(250, 193, 93);
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.suggestion-robot-text {
+    color: rgb(250, 193, 93);
+    width: 520px;
+    height: 300px;
+    overflow-y: scroll;
+    font-size: 18px;
+}
+
+.suggestion-close-container {
+    position: fixed;
+    bottom: 612px;
+    right: 592px;
+}
+.suggestion-close-btn {
+    color: rgb(250, 193, 93);
+    border: solid 3px black;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 30px;
+    padding: 8px 20px;
+    background-color: rgb(40, 40, 80);
+    position: fixed;
+    margin-left: -32px;
+    margin-top: -32px;
+}
+.button-hide {
+    opacity: 0;
+    z-index: 0;
+}
+.button-show {
+    opacity: 1;
+    z-index: 100;
+}
+
 
 .no-data-container {
     text-align: center;
     display: flex;
     justify-content: center;
+}
+.no-data-title {
+    color: rgb(250,193,93);
+    font-size: 42px;
+    font-weight: bold;
 }
 .no-data-label {
     color: rgb(250,193,93);
