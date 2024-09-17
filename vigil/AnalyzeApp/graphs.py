@@ -4,7 +4,7 @@ from plotly.graph_objs import *
 import pandas as pd
 import numpy as np
 import constants
-import ai
+import ratings
 
 class LineGraph:
     def __init__(self, csv_file, col_name) -> None:
@@ -254,8 +254,8 @@ def adv_groups(path, currconfig) -> dict:
 
         perf = get_performance_rating(complement_pairs, nonpairs, faults) if get_performance_rating(complement_pairs, nonpairs, faults) != 0 else None
         health = get_health_rating(faults) if get_health_rating(faults) != 0 else None
-        perf_advice = ai.advise_perf(complement_pairs, nonpairs)
-        health_advice = ai.advise_health(faults)
+        perf_advice = ratings.advise_perf(complement_pairs, nonpairs)
+        health_advice = ratings.advise_health(faults)
 
         grouping[sub.casefold().capitalize()] = [curr_group, faults, perf, health, perf_advice, health_advice]
     
@@ -276,7 +276,7 @@ def get_complement_rating(complement_pairs):
     rating = 0
 
     if len(complement_pairs) != 0:
-        rating = ai.complement_rating_from(complement_pairs)
+        rating = ratings.complement_rating_from(complement_pairs)
     
     return rating
 
@@ -284,7 +284,7 @@ def get_nonpairs_rating(nonpairs):
     rating = 0
 
     if len(nonpairs) != 0:
-        rating = ai.nonpairs_rating_from(nonpairs)
+        rating = ratings.nonpairs_rating_from(nonpairs)
     
     return rating
 
@@ -292,6 +292,6 @@ def get_health_rating(faults) -> int:
     rating = 0
 
     if len(faults) != 0:
-        rating = ai.health_from(faults)
+        rating = ratings.health_from(faults)
     
     return rating
