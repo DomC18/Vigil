@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.graph_objs import *
+import globalvariables as gv
 import pandas as pd
 import numpy as np
 import constants
@@ -8,7 +9,6 @@ import ratings
 
 class LineGraph:
     def __init__(self, csv_file, col_name) -> None:
-        self.df = pd.read_csv(csv_file)
         self.col_name = col_name
         self.x_data = []
         self.y_data = []
@@ -31,7 +31,7 @@ class LineGraph:
         self._to_html = self.fig.to_html()
     
     def populate_data(self):
-        for _, row in self.df.iterrows():
+        for _, row in gv.df.iterrows():
             self.x_data.append(row["timestamp"])
             self.y_data.append(row[self.col_name])
 
@@ -40,7 +40,6 @@ class LineGraph:
 
 class DoubleLineGraph:
     def __init__(self, csv_file, col_names) -> None:
-        self.df = pd.read_csv(csv_file)
         self.col_names = col_names
         self.x_data = []
         self.y_data = {}
@@ -48,7 +47,7 @@ class DoubleLineGraph:
         self.populate_data()
 
         self.fig = px.line(
-            self.df,
+            gv.df,
             x='timestamp',
             y=self.col_names,
             title=" vs. ".join(self.col_names),
@@ -66,9 +65,9 @@ class DoubleLineGraph:
         self._to_html = self.fig.to_html()
 
     def populate_data(self):
-        self.x_data = self.df["timestamp"].tolist()
+        self.x_data = gv.df["timestamp"].tolist()
         for col in self.col_names:
-            self.y_data[col] = self.df[col].tolist()
+            self.y_data[col] = gv.df[col].tolist()
 
     def to_html(self):
         return self._to_html
@@ -156,21 +155,17 @@ class Fault:
         self.isactive = isactive
     
     def fill_timestamps(self, path):
-        df = pd.read_csv(path)
-
-        for _, row in df.iterrows():
+        for _, row in gv.df.iterrows():
             if row[self.title] == True:
                 self.timestamps.append(round(row["timestamp"], 3))
 
         self.freq = len(self.timestamps)
 
 def get_numeric_columns(path) -> list[str]:
-    df = pd.read_csv(path)
-    return [col for col in df.columns if col != "timestamp" and df[col].dtype in [np.float64, np.int64]]
+    return [col for col in gv.df.columns if col != "timestamp" and gv.df[col].dtype in [np.float64, np.int64]]
 
 def get_fault_columns(path) -> list[str]:
-    df = pd.read_csv(path)
-    return [col for col in df.columns if df[col].dtype == bool and (('fault' in col or 'error' in col or 'err' in col)
+    return [col for col in gv.df.columns if gv.df[col].dtype == bool and (('fault' in col or 'error' in col or 'err' in col)
                                                                     or ('Fault' in col or 'Error' in col or 'Err' in col))]
 
 def belongs_to(column, sub) -> bool:
@@ -214,7 +209,7 @@ def find_complement(curr_column:str, columns:list):
             continue
     return (False, None)
 
-def adv_groups(path, currconfig) -> dict:
+def adv_groups(path:str, currconfig) -> dict:
     currconfig_subsystems = currconfig.SubsystemConfig.Subsystems.all()
     subsystems = [s.SubsystemName for s in currconfig_subsystems]
     numeric_columns = get_numeric_columns(path)
@@ -235,7 +230,7 @@ def adv_groups(path, currconfig) -> dict:
                     continue
                 elif complement[0]:
                     graphs.append(DoubleLineGraph(path, [col_name, complement[1]]))
-                    complement_pairs.append((col_name, complement[1]))
+                    complement_pairs.append([col_name, complement[1]])
                 else:
                     graphs.append(LineGraph(path, col_name))
                     nonpairs.append(col_name)
@@ -252,9 +247,10 @@ def adv_groups(path, currconfig) -> dict:
                 fault.fill_timestamps(path)
                 faults.append(fault)
 
-        perf = get_performance_rating(complement_pairs, nonpairs, faults) if get_performance_rating(complement_pairs, nonpairs, faults) != 0 else None
+        perf = get_performance_rating(complement_pairs, faults) if get_performance_rating(complement_pairs, faults) != 0 else None
         health = get_health_rating(faults) if get_health_rating(faults) != 0 else None
-        perf_advice = ratings.advise_perf(complement_pairs, nonpairs)
+        try: perf_advice = ratings.advise_perf([[pair[0], pair[1], pair[2]] for pair in complement_pairs])
+        except: perf_advice = None
         health_advice = ratings.advise_health(faults)
 
         grouping[sub.casefold().capitalize()] = [curr_group, faults, perf, health, perf_advice, health_advice]
@@ -265,33 +261,39 @@ def adv_groups(path, currconfig) -> dict:
     
     return grouping
 
-def get_performance_rating(complement_pairs, nonpairs, faults) -> int:
+def get_performance_rating(complement_pairs:list, faults:list) -> int:
     complement_rating = get_complement_rating(complement_pairs)
-    nonpair_rating = get_nonpairs_rating(nonpairs)
     health_rating = get_health_rating(faults)
 
-    return round((0.7*((complement_rating + nonpair_rating)/2) + 0.3*health_rating), 2)
+    return int(0.7*(complement_rating) + 0.3*health_rating)
 
-def get_complement_rating(complement_pairs):
-    rating = 0
-
+def get_complement_rating(complement_pairs:list):
+    rating = 100
     if len(complement_pairs) != 0:
-        rating = ratings.complement_rating_from(complement_pairs)
-    
-    return rating
+        total_error = 0
+        for pair in complement_pairs:
+            first_col, second_col = pair[0], pair[1]
+            for _, row in gv.df.iterrows():
+                if row[first_col] != 0:
+                    total_error += (100*(row[first_col] - row[second_col]))/row[first_col]
+            pair.append(total_error)
+        rating -= total_error
+    rating = round(rating, 1)
+    return (rating if rating >= 0 else 0)
 
-def get_nonpairs_rating(nonpairs):
-    rating = 0
-
-    if len(nonpairs) != 0:
-        rating = ratings.nonpairs_rating_from(nonpairs)
-    
-    return rating
-
-def get_health_rating(faults) -> int:
-    rating = 0
-
+def get_health_rating(faults:list) -> int:
+    rating = 100
     if len(faults) != 0:
-        rating = ratings.health_from(faults)
-    
+        total_time = gv.df["timestamp"].iloc[-1]
+        total_fault_time = 0
+        for fault in faults:
+            prev_time = 0
+            for time in fault.timestamps:
+                if time - prev_time <= 1/3:
+                    total_fault_time += (time - prev_time)
+                else:
+                    total_fault_time += 1/3
+                prev_time = time
+        rating -= (total_fault_time / total_time) * 100
+    rating = round(rating, 1)
     return rating

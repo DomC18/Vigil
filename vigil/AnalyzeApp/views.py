@@ -2,11 +2,12 @@ from .methods import get_all_with_username, last_with_username
 from django.core.handlers.wsgi import WSGIRequest
 from ConfigApp.models import CurrentConfiguration
 from django.shortcuts import render, redirect
-from .graphs import adv_groups, get_fault_columns
+from .graphs import adv_groups
 from .forms import AnalyzeConfigForm
 from .models import AnalyzeConfig
 import vigil.settings as settings
 import globalvariables as gv
+import pandas as pd
 import os
 
 def analyze(request:WSGIRequest):
@@ -25,6 +26,7 @@ def analyze(request:WSGIRequest):
 def analyzematch(request:WSGIRequest):
     path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
     currconfig = get_all_with_username(CurrentConfiguration)[0]
+    gv.df = pd.read_csv(path)
     grouping = adv_groups(path, currconfig)
 
     return render(request, 'analyzematch.html', {'grouping': grouping, 'fault_idx': 1, 'subsystem': list(grouping.keys())[0], 'backfaultidx': 0, 'reachedback': True, 'nextfaultidx': 1, 'reachedfront': False})
@@ -32,9 +34,8 @@ def analyzematch(request:WSGIRequest):
 def analyzematchswitch(request:WSGIRequest, subsystem, fault_idx):
     path = os.path.join(settings.BASE_DIR, ("media" + rf"{gv.current_data}"))
     currconfig = get_all_with_username(CurrentConfiguration)[0]
+    gv.df = pd.read_csv(path)
     grouping = adv_groups(path, currconfig)
-    somefaults = get_fault_columns(path)
-    print(somefaults)
 
     fault_idx = int(fault_idx)
     faults = grouping[subsystem][1]
