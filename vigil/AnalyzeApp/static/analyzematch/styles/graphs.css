@@ -236,6 +236,7 @@
 
 .suggestion-images-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -257,15 +258,17 @@
     color: rgb(250, 193, 93);
     font-size: 30px;
     font-weight: bold;
-    margin: 0;
+    margin: -12px 0 12px 0;
 }
 
 .suggestion-robot-text {
-    color: rgb(250, 193, 93);
+    color: rgb(186, 143, 67);
     width: 520px;
     height: 300px;
     overflow-y: scroll;
     font-size: 18px;
+    padding: 0 8px;
+    border: solid 3px rgb(155, 119, 55);
 }
 
 .suggestion-close-container {
@@ -282,8 +285,8 @@
     padding: 8px 20px;
     background-color: rgb(40, 40, 80);
     position: fixed;
-    margin-left: -32px;
-    margin-top: -32px;
+    margin-left: -52px;
+    margin-top: -82px;
 }
 .button-hide {
     opacity: 0;
